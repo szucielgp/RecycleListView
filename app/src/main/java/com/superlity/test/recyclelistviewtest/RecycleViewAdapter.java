@@ -29,25 +29,28 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/17.
-        */
+ */
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
     private Context context;
     private List<AVIMTypedMessage> messageList = new ArrayList<AVIMTypedMessage>();
     private static PrettyTime prettyTime = new PrettyTime();
+
     private enum MsgViewType {
         ComeText(0), ToText(1), ComeImage(2), ToImage(3);
         int value;
+
         MsgViewType(int value) {
             this.value = value;
         }
+
         public int getValue() {
             return value;
         }
     }
 
 
-    RecycleViewAdapter(Context context){
+    RecycleViewAdapter(Context context) {
         this.context = context;
     }
 
@@ -69,49 +72,47 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public int getItemCount() {
         return messageList.size();
     }
+
     public void add(AVIMTypedMessage message) {
         messageList.add(message);
-        notifyItemRangeInserted(messageList.size(),1);
+        notifyItemRangeInserted(messageList.size(), 1);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if(viewType == MsgViewType.ComeText.getValue()){
+        if (viewType == MsgViewType.ComeText.getValue()) {
             View view = View.inflate(parent.getContext(), R.layout.left_cell_layout, null);
-            return new ViewHolder(view,0);
-        }
-        else if(viewType == MsgViewType.ToText.getValue()){
+            return new ViewHolder(view, 0);
+        } else if (viewType == MsgViewType.ToText.getValue()) {
             View view = View.inflate(parent.getContext(), R.layout.right_cell_layout, null);
-            return new ViewHolder(view,1);
-        }else if(viewType == MsgViewType.ComeImage.getValue()) {//加载发送方的图片
+            return new ViewHolder(view, 1);
+        } else if (viewType == MsgViewType.ComeImage.getValue()) {//加载发送方的图片
             View view = View.inflate(parent.getContext(), R.layout.left_imagecell_layout, null);
-            return new ViewHolder(view,2);
-        }else if(viewType == MsgViewType.ToImage.getValue()) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_imagecell_layout,parent,false);
-            return new ViewHolder(view,3);
+            return new ViewHolder(view, 2);
+        } else if (viewType == MsgViewType.ToImage.getValue()) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_imagecell_layout, parent, false);
+            return new ViewHolder(view, 3);
+        } else if (viewType == 4) {//加载消息提醒
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_remindcell_layout, parent, false);//false可以控制在中间显示
+            return new ViewHolder(view, 4);
         }
-        else if(viewType == 4) {//加载消息提醒
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_remindcell_layout,parent,false);//false可以控制在中间显示
-            return new ViewHolder(view,4);
-        }
-        return  null;
+        return null;
     }
-
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        switch (getItemViewType(position)){
-            case  0:
-                initMessageView(position,holder);
+        switch (getItemViewType(position)) {
+            case 0:
+                initMessageView(position, holder);
                 break;
             case 1:
                 initMessageView(position, holder);
                 break;
             case 2:
                 final AVIMImageMessage imageMsg = (AVIMImageMessage) messageList.get(position);
-                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView,  PathUtils.getChatFilePath(imageMsg.getMessageId()),
+                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(imageMsg.getMessageId()),
                         imageMsg.getFileUrl());
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         imageMsg.getTimestamp())) {
@@ -123,7 +124,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 holder.mImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ImageBrowserActivity.go(context,PathUtils.getChatFilePath(imageMsg.getMessageId()),imageMsg.getFileUrl());
+                        ImageBrowserActivity.go(context, PathUtils.getChatFilePath(imageMsg.getMessageId()), imageMsg.getFileUrl());
                     }
                 });
                 break;
@@ -141,12 +142,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 holder.mImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ImageBrowserActivity.go(context,PathUtils.getChatFilePath(image.getMessageId()),image.getFileUrl());
+                        ImageBrowserActivity.go(context, PathUtils.getChatFilePath(image.getMessageId()), image.getFileUrl());
                     }
                 });
                 break;
             default:
-                initMessageView(position,holder);
+                initMessageView(position, holder);
                 break;
         }
     }
@@ -166,33 +167,30 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             holder.tTextView.setVisibility(View.GONE);
         }
     }
+
     // 重写的自定义ViewHolder
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public TextView tTextView;
         public ImageView mImageView;
 
-        public ViewHolder( View v  )
-        {
+        public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.tv1);
         }
-        public ViewHolder( View v ,int ViewType )
-        {
+
+        public ViewHolder(View v, int ViewType) {
             super(v);
-            if(ViewType == 0){
-                 mTextView = (TextView) v.findViewById(R.id.tv1);
-                 tTextView = (TextView) v.findViewById(R.id.time);
-            }else if(ViewType == 1){
+            if (ViewType == 0) {
                 mTextView = (TextView) v.findViewById(R.id.tv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
-            }
-            else if(ViewType == 2){
+            } else if (ViewType == 1) {
+                mTextView = (TextView) v.findViewById(R.id.tv1);
+                tTextView = (TextView) v.findViewById(R.id.time);
+            } else if (ViewType == 2) {
                 mImageView = (ImageView) v.findViewById(R.id.iv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
-            }
-            else if(ViewType == 3){
+            } else if (ViewType == 3) {
                 mImageView = (ImageView) v.findViewById(R.id.iv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
             }
@@ -203,8 +201,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     boolean isComeMsg(AVIMTypedMessage msg) {
         return !msg.getFrom().equals(MyApplication.getClientIdFromPre());
     }
-     @Override
-     public int getItemViewType(int position) {
+
+    @Override
+    public int getItemViewType(int position) {
         AVIMTypedMessage msg = messageList.get(position);
         boolean comeMsg = isComeMsg(msg);
 

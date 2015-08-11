@@ -5,10 +5,11 @@ import java.util.Date;
 
 /**
  * ??????
- *@Copyright Copyright (c) 2012 - 2100
-  *@author    Administrator
- *@create at 2013-5-9
- *@version 1.1.0
+ *
+ * @author Administrator
+ * @version 1.1.0
+ * @Copyright Copyright (c) 2012 - 2100
+ * @create at 2013-5-9
  */
 public class Util {
 

@@ -20,12 +20,12 @@ public class FaceAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-    private int size=0;
+    private int size = 0;
 
     public FaceAdapter(Context context, List<MsgEmojiModle> list) {
-        this.inflater=LayoutInflater.from(context);
-        this.data=list;
-        this.size=list.size();
+        this.inflater = LayoutInflater.from(context);
+        this.data = list;
+        this.size = list.size();
     }
 
     @Override
@@ -45,28 +45,28 @@ public class FaceAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	MsgEmojiModle emoji=data.get(position);
-        ViewHolder viewHolder=null;
-        if(convertView == null) {
-            viewHolder=new ViewHolder();
-            convertView=inflater.inflate(R.layout.face_item, null);
-            viewHolder.iv_face=(ImageView)convertView.findViewById(R.id.face_iv);
+        MsgEmojiModle emoji = data.get(position);
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.face_item, null);
+            viewHolder.iv_face = (ImageView) convertView.findViewById(R.id.face_iv);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder=(ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(emoji.getId() == R.drawable.face_delete_select) {
+        if (emoji.getId() == R.drawable.face_delete_select) {
             convertView.setBackgroundDrawable(null);
             viewHolder.iv_face.setImageResource(emoji.getId());
-           // viewHolder.iv_face.setImageResource(R.drawable.face_delete_select);
+            // viewHolder.iv_face.setImageResource(R.drawable.face_delete_select);
 
-         ViewGroup.LayoutParams params =  viewHolder.iv_face.getLayoutParams();
+            ViewGroup.LayoutParams params = viewHolder.iv_face.getLayoutParams();
             params.height = 70;
-            params.width  = 70;
+            params.width = 70;
             viewHolder.iv_face.setLayoutParams(params);
             viewHolder.iv_face.setBackgroundResource(R.drawable.list_selector);
-           // viewHolder.iv_face.setScaleType(ImageView.ScaleType.CENTER);
-        } else if(TextUtils.isEmpty(emoji.getCharacter())) {
+            // viewHolder.iv_face.setScaleType(ImageView.ScaleType.CENTER);
+        } else if (TextUtils.isEmpty(emoji.getCharacter())) {
             convertView.setBackgroundDrawable(null);
             viewHolder.iv_face.setImageDrawable(null);
             viewHolder.iv_face.setBackgroundResource(R.drawable.list_selector);

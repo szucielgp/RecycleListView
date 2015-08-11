@@ -12,14 +12,17 @@ import android.widget.EditText;
 
 /**
  * Utils
+ *
  * @author zhongdaxia 2014-9-2 12:05:55
  */
 
 public class Utils {
 
-    private static final String EXTRA_ISINITDB= "ISINITDB";
+    private static final String EXTRA_ISINITDB = "ISINITDB";
     private static final String EXTRA_DEF_KEYBOARDHEIGHT = "DEF_KEYBOARDHEIGHT";
-    /** 键盘默认高度 (dp) */
+    /**
+     * 键盘默认高度 (dp)
+     */
     private static int sDefKeyboardHeight = 300;
     public static int sDefRow = 7;
     public static int sDefLine = 3;
@@ -29,7 +32,7 @@ public class Utils {
         return settings.getBoolean(EXTRA_ISINITDB, false);
     }
 
-    public static void setIsInitDb(Context context,boolean b) {
+    public static void setIsInitDb(Context context, boolean b) {
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         settings.edit().putBoolean(EXTRA_ISINITDB, b).commit();
     }
@@ -38,22 +41,26 @@ public class Utils {
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         int height = settings.getInt(EXTRA_DEF_KEYBOARDHEIGHT, 0);
         if (height > 0 && sDefKeyboardHeight != height) {
-            Utils.setDefKeyboardHeight(context,height);
+            Utils.setDefKeyboardHeight(context, height);
         }
         return sDefKeyboardHeight;
     }
 
-    public static void setDefKeyboardHeight(Context context,int height) {
-        if(sDefKeyboardHeight != height){
+    public static void setDefKeyboardHeight(Context context, int height) {
+        if (sDefKeyboardHeight != height) {
             final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
             settings.edit().putInt(EXTRA_DEF_KEYBOARDHEIGHT, height).commit();
         }
         Utils.sDefKeyboardHeight = height;
     }
 
-    /** 屏幕宽度   */
+    /**
+     * 屏幕宽度
+     */
     private static int DisplayWidthPixels = 0;
-    /** 屏幕高度   */
+    /**
+     * 屏幕高度
+     */
     private static int DisplayheightPixels = 0;
 
     private static void getDisplayMetrics(Context context) {

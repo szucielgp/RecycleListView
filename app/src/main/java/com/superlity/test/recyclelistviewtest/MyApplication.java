@@ -11,6 +11,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 package com.superlity.test.recyclelistviewtest;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,15 +26,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 
-
 public class MyApplication extends Application {
-
 
     private static MyApplication instance;
     public static final String KEY_CLIENT_ID = "client_id";
     static SharedPreferences preferences;
+
     /**
      * 单例，返回一个实例
+     *
      * @return
      */
     public static MyApplication getInstance() {
@@ -73,7 +74,6 @@ public class MyApplication extends Application {
     public static AVIMClient getIMClient() {
         return AVIMClient.getInstance(getClientIdFromPre());
     }
-
 
 
     public static void initImageLoader(Context context) {

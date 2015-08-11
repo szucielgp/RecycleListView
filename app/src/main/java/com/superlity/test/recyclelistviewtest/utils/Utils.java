@@ -20,87 +20,87 @@ import java.util.Random;
 
 
 public class Utils {
-  public static ProgressDialog showSpinnerDialog(Activity activity) {
-    ProgressDialog dialog = new ProgressDialog(activity);
-    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    dialog.setCancelable(true);
-    dialog.setMessage(activity.getString(R.string.chat_utils_hardLoading));
-    if (!activity.isFinishing()) {
-      dialog.show();
-    }
-    return dialog;
-  }
-
-  public static String uuid() {
-    StringBuilder sb = new StringBuilder();
-    int start = 48, end = 58;
-    appendChar(sb, start, end);
-    appendChar(sb, 65, 90);
-    appendChar(sb, 97, 123);
-    String charSet = sb.toString();
-    StringBuilder sb1 = new StringBuilder();
-    Random random = new Random();
-    for (int i = 0; i < 24; i++) {
-      int len = charSet.length();
-      int pos = random.nextInt(len);
-      sb1.append(charSet.charAt(pos));
-    }
-    return sb1.toString();
-  }
-
-  public static void appendChar(StringBuilder sb, int start, int end) {
-    int i;
-    for (i = start; i < end; i++) {
-      sb.append((char) i);
-    }
-  }
-
-  private static DefaultHttpClient httpClient;
-
-  private synchronized static DefaultHttpClient getDefaultHttpClient() {
-    if (httpClient == null) {
-      httpClient = new DefaultHttpClient();
-    }
-    return httpClient;
-  }
-
-  /**
-   * ÏÂÔØÎÄ¼þ£¬ÈôÊ§°Ü»á½«ÎÄ¼þÉ¾³ý£¬ÒÔ±ãÏÂ´ÎÖØÐÂÏÂÔØ
-   * ÔÝÊ±²»Ð£Ñé size£¬ÍòÒ» size ¸úÊµ¼ÊÎÄ¼þµÄ´óÐ¡²»Ò»Ñù£¬»áµ¼ÖÂÃ¿´ÎÖØÐÂÏÂÔØ
-   *
-   * @param url
-   * @param toFile
-   */
-  public static void downloadFileIfNotExists(String url, File toFile) {
-    if (!toFile.exists()) {
-      FileOutputStream outputStream = null;
-      InputStream inputStream = null;
-      try {
-        outputStream = new FileOutputStream(toFile);
-        HttpGet get = new HttpGet(url);
-        HttpResponse response = getDefaultHttpClient().execute(get);
-        HttpEntity entity = response.getEntity();
-        inputStream = entity.getContent();
-        byte[] buffer = new byte[4096];
-        int len;
-        while ((len = inputStream.read(buffer)) != -1) {
-          outputStream.write(buffer, 0, len);
+    public static ProgressDialog showSpinnerDialog(Activity activity) {
+        ProgressDialog dialog = new ProgressDialog(activity);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(true);
+        dialog.setMessage(activity.getString(R.string.chat_utils_hardLoading));
+        if (!activity.isFinishing()) {
+            dialog.show();
         }
-      } catch (IOException e) {
-        if (toFile.exists()) {
-          toFile.delete();
-        }
-      } finally {
-        closeQuietly(inputStream);
-        closeQuietly(outputStream);
-      }
+        return dialog;
     }
-  }
 
-  public static void closeQuietly(Closeable closeable) {
-    try {
-      closeable.close();
-    } catch (Exception e) {
+    public static String uuid() {
+        StringBuilder sb = new StringBuilder();
+        int start = 48, end = 58;
+        appendChar(sb, start, end);
+        appendChar(sb, 65, 90);
+        appendChar(sb, 97, 123);
+        String charSet = sb.toString();
+        StringBuilder sb1 = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 24; i++) {
+            int len = charSet.length();
+            int pos = random.nextInt(len);
+            sb1.append(charSet.charAt(pos));
+        }
+        return sb1.toString();
     }
-  }
+
+    public static void appendChar(StringBuilder sb, int start, int end) {
+        int i;
+        for (i = start; i < end; i++) {
+            sb.append((char) i);
+        }
+    }
+
+    private static DefaultHttpClient httpClient;
+
+    private synchronized static DefaultHttpClient getDefaultHttpClient() {
+        if (httpClient == null) {
+            httpClient = new DefaultHttpClient();
+        }
+        return httpClient;
+    }
+
+    /**
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü»á½«ï¿½Ä¼ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½Ê±ï¿½ï¿½Ð£ï¿½ï¿½ sizeï¿½ï¿½ï¿½ï¿½Ò» size ï¿½ï¿½Êµï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä´ï¿½Ð¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     *
+     * @param url
+     * @param toFile
+     */
+    public static void downloadFileIfNotExists(String url, File toFile) {
+        if (!toFile.exists()) {
+            FileOutputStream outputStream = null;
+            InputStream inputStream = null;
+            try {
+                outputStream = new FileOutputStream(toFile);
+                HttpGet get = new HttpGet(url);
+                HttpResponse response = getDefaultHttpClient().execute(get);
+                HttpEntity entity = response.getEntity();
+                inputStream = entity.getContent();
+                byte[] buffer = new byte[4096];
+                int len;
+                while ((len = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, len);
+                }
+            } catch (IOException e) {
+                if (toFile.exists()) {
+                    toFile.delete();
+                }
+            } finally {
+                closeQuietly(inputStream);
+                closeQuietly(outputStream);
+            }
+        }
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        try {
+            closeable.close();
+        } catch (Exception e) {
+        }
+    }
 }

@@ -70,7 +70,7 @@ public class AutoHeightLayout extends ResizeLayout implements ResizeLayout.OnRes
         }
     }
 
-    public void hideAutoView(){
+    public void hideAutoView() {
         this.post(new Runnable() {
             @Override
             public void run() {
@@ -81,15 +81,15 @@ public class AutoHeightLayout extends ResizeLayout implements ResizeLayout.OnRes
                 }
             }
         });
-        mKeyboardState = KEYBOARD_STATE_NONE ;
+        mKeyboardState = KEYBOARD_STATE_NONE;
     }
 
-    public  void showAutoView(){
+    public void showAutoView() {
         if (mAutoHeightLayoutView != null) {
             mAutoHeightLayoutView.setVisibility(VISIBLE);
             setAutoViewHeight(Utils.dip2px(mContext, mAutoViewHeight));
         }
-        mKeyboardState = mKeyboardState == KEYBOARD_STATE_NONE ? KEYBOARD_STATE_FUNC : KEYBOARD_STATE_BOTH ;
+        mKeyboardState = mKeyboardState == KEYBOARD_STATE_NONE ? KEYBOARD_STATE_FUNC : KEYBOARD_STATE_BOTH;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class AutoHeightLayout extends ResizeLayout implements ResizeLayout.OnRes
 
     @Override
     public void OnSoftClose(int height) {
-        mKeyboardState = mKeyboardState == KEYBOARD_STATE_BOTH ? KEYBOARD_STATE_FUNC : KEYBOARD_STATE_NONE ;
+        mKeyboardState = mKeyboardState == KEYBOARD_STATE_BOTH ? KEYBOARD_STATE_FUNC : KEYBOARD_STATE_NONE;
     }
 
     @Override

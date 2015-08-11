@@ -77,8 +77,7 @@ public class ResizeLayout extends RelativeLayout {
                 }
             }
             heightList.clear();
-        }
-        else {
+        } else {
             heightList.clear();
         }
     }
@@ -104,13 +103,19 @@ public class ResizeLayout extends RelativeLayout {
 
     public interface OnResizeListener {
 
-        /** 软键盘弹起 */
+        /**
+         * 软键盘弹起
+         */
         void OnSoftPop(int height);
 
-        /** 软键盘关闭 */
+        /**
+         * 软键盘关闭
+         */
         void OnSoftClose(int height);
 
-        /** 软键盘高度改变 */
+        /**
+         * 软键盘高度改变
+         */
         void OnSoftChanegHeight(int height);
     }
 }
