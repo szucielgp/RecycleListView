@@ -26,10 +26,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:21.+'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
     compile files('libs/android-async-http-1.4.6.jar')
-    compile files('libs/avoscloud-push-v3.6.jar')
-    compile files('libs/avoscloud-sdk-v3.6.jar')
     compile files('libs/fastjson.jar')
     compile files('libs/httpmime-4.2.4.jar')
     compile files('libs/Java-WebSocket-1.2.0-leancloud.jar')
@@ -37,4 +35,6 @@ dependencies {
     compile files('libs/weibo.sdk.android.sso.3.0.1-leancloud.jar')
     compile files('libs/prettytime-3.2.5.Final.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
+    compile files('libs/avoscloud-push-v3.7.jar')
+    compile files('libs/avoscloud-sdk-v3.7.jar')
 }

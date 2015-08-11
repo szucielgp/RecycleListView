@@ -38,13 +38,11 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.controller.AVIMTypedMessagesArrayCallback;
@@ -101,7 +99,7 @@ public class MainActivity extends Activity {
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
     private static final String TAG = MainActivity.class.getSimpleName();
     private ChatHandler handler;
-    static final int PAGE_SIZE = 8;
+    static final int PAGE_SIZE = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -314,8 +312,8 @@ public class MainActivity extends Activity {
     }
 //刷新之前的消息
     public void loadOldMessages() {
-        if (adapter.getItemCount() == 0) {
-            swipeRefreshLayout.setEnabled(false);
+        if (adapter.getMessageList().size() == 0) {
+            swipeRefreshLayout.setRefreshing(false);
             return;
         } else {
             AVIMTypedMessage firstMsg = adapter.getMessageList().get(0);
@@ -331,16 +329,18 @@ public class MainActivity extends Activity {
                         new CacheMessagesTask(MainActivity.this, typedMessages) {
                             @Override
                             void onSucceed(List<AVIMTypedMessage> typedMessages) {
-                                if(typedMessages.size()==0){
-                                    Toast.makeText(MainActivity.this,R.string.chat_activity_loadMessagesFinish,Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+
                                 List<AVIMTypedMessage> newMessages = new ArrayList<>(PAGE_SIZE);
                                 newMessages.addAll(typedMessages);
                                 newMessages.addAll(adapter.getMessageList());
                                 adapter.setMessageList(newMessages);
                                 adapter.notifyDataSetChanged();
-
+                                if(typedMessages.size()==0){
+                                    Toast.makeText(MainActivity.this,R.string.chat_activity_loadMessagesFinish,Toast.LENGTH_SHORT).show();
+                                }
+//                                else if (typedMessages.size()>0) {
+//                                 //   rec.scrollToPosition();
+//                                }
                             }
                         }.execute();
                     }

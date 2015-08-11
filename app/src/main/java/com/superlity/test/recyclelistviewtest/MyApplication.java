@@ -37,7 +37,6 @@ public class MyApplication extends Application {
      * @return
      */
     public static MyApplication getInstance() {
-
         return instance;
     }
 
@@ -73,9 +72,6 @@ public class MyApplication extends Application {
     public static AVIMClient getIMClient() {
         return AVIMClient.getInstance(getClientIdFromPre());
     }
-
-
-
     public static void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context)

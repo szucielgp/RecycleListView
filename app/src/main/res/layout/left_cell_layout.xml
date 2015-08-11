@@ -8,16 +8,34 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" />
-    <TextView
-        android:id="@+id/tv1"
+
+    <LinearLayout
+        android:layout_below="@+id/time"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/time"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/msg_in"
-        android:layout_alignParentLeft="true"
-        android:textSize="17dp"
-        android:textColor="@color/black"
-        android:gravity="left|center" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivh"
+            android:background="@drawable/visitor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ivh"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/msg_in"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
