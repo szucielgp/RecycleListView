@@ -1,6 +1,5 @@
 package com.superlity.test.recyclelistviewtest;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -38,13 +34,11 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.controller.AVIMTypedMessagesArrayCallback;
@@ -58,17 +52,12 @@ import com.superlity.test.recyclelistviewtest.utils.PathUtils;
 import com.superlity.test.recyclelistviewtest.utils.PhotoUtils;
 import com.superlity.test.recyclelistviewtest.utils.ProviderPathUtils;
 
-
 import java.io.File;
 import java.io.IOException;
-import java.io.InvalidClassException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MainActivity extends Activity {
@@ -87,6 +76,7 @@ public class MainActivity extends Activity {
     private View emojiView;
     public AutoHeightLayout resizelayout;
     public SwipeRefreshLayout swipeRefreshLayout;
+    private Button btnTestFresh;
     //消息部分的定义
     private SelectFaceHelper mFaceHelper;
     /**
@@ -280,6 +270,14 @@ public class MainActivity extends Activity {
                 onPopupButtonClick(attchButton);
             }
         });
+
+        btnTestFresh = (Button)findViewById( R.id.btnRefresh );
+        btnTestFresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testQueryOldMsg();
+            }
+        });
     }
 
     //跳转到此页面来的方法
@@ -322,8 +320,10 @@ public class MainActivity extends Activity {
             return;
         } else {
             AVIMTypedMessage firstMsg = adapter.getMessageList().get(0);
+            System.out.println("timestamp = " + firstMsg.getTimestamp() );
             String msgId = firstMsg.getMessageId();
-            long time = firstMsg.getTimestamp();
+            final long time = firstMsg.getTimestamp();
+            currentRefreshTimestamp = time;
             ChatManager.getInstance().queryMessages(conversation, msgId, time, PAGE_SIZE, new AVIMTypedMessagesArrayCallback() {
                 @Override
                 public void done(List<AVIMTypedMessage> typedMessages, AVException e) {
@@ -350,6 +350,18 @@ public class MainActivity extends Activity {
             });
         }
 
+    }
+
+    private long currentRefreshTimestamp = 0;
+    private void testQueryOldMsg(){
+        //TODO 查看官方文档，这个接口到底是怎么使用的
+        System.out.println( "currentRefreshTimestamp = " + currentRefreshTimestamp );
+        ChatManager.getInstance().queryMessages(conversation, null, currentRefreshTimestamp, PAGE_SIZE, new AVIMTypedMessagesArrayCallback() {
+            @Override
+            public void done(List<AVIMTypedMessage> typedMessages, AVException e) {
+                System.out.println( typedMessages.size() );
+            }
+        });
     }
 
     @Override

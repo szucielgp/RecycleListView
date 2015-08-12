@@ -1,128 +1,136 @@
 <com.superlity.test.recyclelistviewtest.resize.AutoHeightLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/root">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-   >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/demo_toolbar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:minHeight="?attr/actionBarSize"
-        app:title="@string/hello_world" />
+    android:orientation="vertical">
 
-   <android.support.v4.widget.SwipeRefreshLayout
-       android:id="@+id/swipe_layout"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_weight="1">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listview"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_hd"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
-        android:background="#FFFFFF"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="7dp"
-        android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingBottom="8dp"
-        >
-         <ImageView
-            android:id="@+id/msg_smile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_msg_panel_kb"
-             android:paddingRight="10dp"
-             android:paddingTop="5dp" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-        <EditText
-            android:id="@+id/msg_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=" "
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textColorHint="@android:color/darker_gray"
-            android:textColor="@android:color/black"
-            android:textSize="18dp"
-            android:maxLines="4"
-            android:paddingBottom="7dp"
-            android:gravity="bottom"
-            android:background="@null"
-            android:textCursorDrawable="@null"
-            />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
-            </LinearLayout>
-        <ImageView
-            android:id="@+id/attach"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_ab_attach"
-            android:paddingLeft="10dp"
-            />
-
-        <ImageView
-            android:id="@+id/send_btn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_send"
-            android:paddingLeft="10dp"
-            android:visibility="gone"
-            />
-    </LinearLayout>
-    <FrameLayout
-        android:id="@+id/emoji"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom"
-        android:paddingTop="10dp"
-        android:focusable="false"
-        android:visibility="gone" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/demo_toolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/hello_world" />
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:text="刷新"
+            android:id="@+id/btnRefresh" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_hd" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:paddingTop="7dp">
+
+            <ImageView
+                android:id="@+id/msg_smile"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/ic_msg_panel_kb" />
+
             <LinearLayout
-                android:id="@+id/msg_face_index_view"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/five"
-                android:orientation="horizontal" >
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/msg_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="bottom"
+                    android:hint=" "
+                    android:maxLines="4"
+                    android:paddingBottom="7dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/attach"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_ab_attach" />
+
+            <ImageView
+                android:id="@+id/send_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_send"
+                android:visibility="gone" />
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/emoji"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_gravity="bottom"
+            android:focusable="false"
+            android:paddingTop="10dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/msg_face_index_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/five"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"></LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 
 </com.superlity.test.recyclelistviewtest.resize.AutoHeightLayout>
