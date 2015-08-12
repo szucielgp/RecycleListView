@@ -44,7 +44,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        AVOSCloud.setDebugLogEnabled(true);
+       AVOSCloud.setDebugLogEnabled(true);
         // 这是用于 SimpleChat 的 app id 和 app key，如果更改将不能进入 demo 中相应的聊天室
         AVOSCloud.initialize(this, "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm",
                 "ktslkgc5rm1kwk5hft7n5kmzdmqbu0o8vebbfvct48ybg1xk");

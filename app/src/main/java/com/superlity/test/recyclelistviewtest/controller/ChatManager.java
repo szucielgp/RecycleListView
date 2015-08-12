@@ -37,7 +37,7 @@ public class ChatManager {
                 if (e != null) {
                     callback.done(Collections.EMPTY_LIST, e);
                 } else {
-                    List<AVIMTypedMessage> resultMessages = new ArrayList<>(limit);
+                    List<AVIMTypedMessage> resultMessages = new ArrayList<>();
                     for (AVIMMessage msg : imMessages) {
                         if (msg instanceof AVIMTypedMessage) {
                             resultMessages.add((AVIMTypedMessage) msg);
@@ -48,6 +48,10 @@ public class ChatManager {
                     callback.done(resultMessages, null);
                 }
             }
+
+
+
+
         });
     }
 }

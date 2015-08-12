@@ -8,9 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
+//import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.Conversation;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
@@ -40,15 +42,10 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_conversation);
-
-
     clientIdTextView = (TextView) findViewById(R.id.client_id);
     otherIdEditText = (EditText) findViewById(R.id.otherIdEditText);
-
     clientIdTextView.setText(getString(R.string.welcome) + " "+ MyApplication.getClientIdFromPre());
-
     findViewById(R.id.join_conversation).setOnClickListener(this);
-
     findViewById(R.id.logout).setOnClickListener(this);
     findViewById(R.id.chat_with_other).setOnClickListener(this);
   }
@@ -70,7 +67,7 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void done(AVIMConversation avimConversation, AVIMException e) {
                   if (filterException(e)) {
-                     MainActivity.startActivity(ConversationActivity.this, avimConversation.getConversationId());
+                    MainActivity.startActivity(ConversationActivity.this, avimConversation.getConversationId());
                     toast("会话建立成功");
                   }
                 }
@@ -107,6 +104,9 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
           }
         }
       }
+
+
+
     });
   }
 
@@ -123,6 +123,8 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
           Toast.makeText(ConversationActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
       }
+
+
     });
   }
 }

@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+//import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
@@ -99,7 +100,7 @@ public class MainActivity extends Activity {
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
     private static final String TAG = MainActivity.class.getSimpleName();
     private ChatHandler handler;
-    static final int PAGE_SIZE = 10;
+    static final int PAGE_SIZE = 8;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -288,61 +289,81 @@ public class MainActivity extends Activity {
 
 //初始化一开始的消息
    public void loadMessagesWhenInit(int limit) {
-        ChatManager.getInstance().queryMessages(conversation, null, System.currentTimeMillis(), limit, new
+        ChatManager.getInstance().queryMessages(conversation, null,0, limit, new
                 AVIMTypedMessagesArrayCallback() {
                     @Override
                     public void done(final List<AVIMTypedMessage> typedMessages, AVException e) {
                         if (e != null) {
                             e.printStackTrace();
                         } else {
-                            new CacheMessagesTask(MainActivity.this, typedMessages) {
-                                @Override
-                                void onSucceed(List<AVIMTypedMessage> messages) {
-                                    adapter.setMessageList(typedMessages);
-                                    adapter.notifyDataSetChanged();
-                                    //adapter.notifyItemRangeInserted(0, messages.size());
-                                    if (adapter.getItemCount() != 0) {
-                                        layoutManager.scrollToPosition(adapter.getItemCount() - 1);
-                                    }
-                                }
-                            }.execute();
+                            adapter.setMessageList(typedMessages);
+                            adapter.notifyDataSetChanged();
+                            if (adapter.getItemCount() != 0) {
+                                layoutManager.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+//                            new CacheMessagesTask(MainActivity.this, typedMessages) {
+//                                @Override
+//                                void onSucceed(List<AVIMTypedMessage> messages) {
+//
+//                                }
+//                            }.execute();
                         }
                     }
                 });
     }
 //刷新之前的消息
     public void loadOldMessages() {
-        if (adapter.getMessageList().size() == 0) {
+        if (adapter.getMessageList().size() < PAGE_SIZE) {
             swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(MainActivity.this,"没有更多数据~",Toast.LENGTH_SHORT).show();
             return;
         } else {
             AVIMTypedMessage firstMsg = adapter.getMessageList().get(0);
-            String msgId = firstMsg.getMessageId();
-            long time = firstMsg.getTimestamp();
+            final  String msgId = firstMsg.getMessageId();
+            final long time = firstMsg.getTimestamp();
             ChatManager.getInstance().queryMessages(conversation, msgId, time, PAGE_SIZE, new AVIMTypedMessagesArrayCallback() {
                 @Override
                 public void done(List<AVIMTypedMessage> typedMessages, AVException e) {
-                    if (e!=null) {
-                       e.printStackTrace();
-                    }
-                    else {
-                        new CacheMessagesTask(MainActivity.this, typedMessages) {
-                            @Override
-                            void onSucceed(List<AVIMTypedMessage> typedMessages) {
-
-                                List<AVIMTypedMessage> newMessages = new ArrayList<>(PAGE_SIZE);
+                    if (e != null) {
+                        e.printStackTrace();
+                    } else {
+                        if (typedMessages.size() == 0) {
+                            Toast.makeText(MainActivity.this, "没有更多数据0", Toast.LENGTH_SHORT).show();
+                        }else if(typedMessages.size()<PAGE_SIZE){
+                            if (typedMessages.get(0).getTimestamp()==time){
+                                Toast.makeText(MainActivity.this, "没有更多数据！", Toast.LENGTH_SHORT).show();
+                                return;
+                            }else{
+                                List<AVIMTypedMessage> newMessages = new ArrayList<>(typedMessages.size());
                                 newMessages.addAll(typedMessages);
                                 newMessages.addAll(adapter.getMessageList());
                                 adapter.setMessageList(newMessages);
                                 adapter.notifyDataSetChanged();
-                                if(typedMessages.size()==0){
-                                    Toast.makeText(MainActivity.this,R.string.chat_activity_loadMessagesFinish,Toast.LENGTH_SHORT).show();
-                                }
-//                                else if (typedMessages.size()>0) {
-//                                 //   rec.scrollToPosition();
-//                                }
                             }
-                        }.execute();
+                        }else {
+                            List<AVIMTypedMessage> newMessages = new ArrayList<>(PAGE_SIZE);
+                            newMessages.addAll(typedMessages);
+                            newMessages.addAll(adapter.getMessageList());
+                            adapter.setMessageList(newMessages);
+                            adapter.notifyDataSetChanged();
+                        }
+                        //                        if (typedMessages.size()>0) {
+//                            rec.scrollToPosition(typedMessages.size() - 1);
+//                        }
+//                        if (typedMessages.size() == 0) {
+//                            Toast.makeText(MainActivity.this, "没有更多数据", Toast.LENGTH_SHORT).show();
+//                        }
+//                        new CacheMessagesTask(MainActivity.this, typedMessages) {
+//                            @Override
+//                            void onSucceed(List<AVIMTypedMessage> typedMessages) {
+//
+////                                if(typedMessages.size()>0&& typedMessages.get(0).getTimestamp()==time){
+////                                    Toast.makeText(MainActivity.this,R.string.chat_activity_loadMessagesFinish,Toast.LENGTH_SHORT).show();
+////                                    return;
+////                                }
+//
+//                            }
+//                        }.execute();
                     }
 
                 }
@@ -588,6 +609,9 @@ public class MainActivity extends Activity {
                     finishSend();
                 }
             }
+
+
+
         });
     }
 
@@ -616,6 +640,9 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
+
+
+
             });
         } catch (IOException e) {
             LogUtils.logException(e);

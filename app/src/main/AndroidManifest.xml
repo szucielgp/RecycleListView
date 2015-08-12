@@ -21,7 +21,8 @@
         </activity>
 
         <service android:name="com.avos.avoscloud.PushService"
-            android:exported="true" />
+            android:exported="true"
+      />
 
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>

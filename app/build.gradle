@@ -37,4 +37,9 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile files('libs/avoscloud-push-v3.7.jar')
     compile files('libs/avoscloud-sdk-v3.7.jar')
+    compile files('libs/avoscloud-statistics-v3.7.jar')
+    compile files('libs/avoscloud-push-v3.1.4.jar')
+    compile files('libs/avoscloud-sdk-v3.1.4.jar')
+    compile files('libs/avoscloud-sdk-v3.7.1.jar')
+    compile files('libs/avoscloud-push-v3.7.1.jar')
 }

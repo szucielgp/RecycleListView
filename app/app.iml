@@ -95,12 +95,17 @@
     <orderEntry type="library" exported="" name="fastjson" level="project" />
     <orderEntry type="library" exported="" name="prettytime-3.2.5.Final" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.7.1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.1.4" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-statistics-v3.7" level="project" />
     <orderEntry type="library" exported="" name="qq.sdk.1.6.1" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
     <orderEntry type="library" exported="" name="avoscloud-push-v3.7" level="project" />
-    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.7" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-push-v3.7.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.7" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-push-v3.1.4" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.4" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="weibo.sdk.android.sso.3.0.1-leancloud" level="project" />
