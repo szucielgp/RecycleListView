@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
-    <file url="file://$PROJECT_DIR$/app/libs/prettytime-3.2.5.Final.jar" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/assets" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/ConversationType.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/LoginActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/MainActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/MessageHandler.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/MyApplication.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/activity/BaseActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/activity/ConversationActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/activity/ImageBrowserActivity.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/controller/AVIMTypedMessagesArrayCallback.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/EmojiParser.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/FaceAdapter.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/MsgEmojiModle.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/MsgFaceUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/ParseEmojiMsgUtil.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/SelectFaceHelper.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/Util.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/emoji/ViewPagerAdapter.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/resize/AutoHeightLayout.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/utils/LogUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/utils/PathUtils.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/utils/PhotoUtils.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/utils/ProviderPathUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/superlity/test/recyclelistviewtest/utils/Utils.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/chat_common_empty_photo.9.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/chat_common_image_load_fail.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/chat_default_user_avatar.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/chat_xlistview_arrow.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/face_delete_select.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_back.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_doc.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_folder.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_icon_normal.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_icon_pressed.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_img.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_ohter.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_pdf.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_ppt.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_rar.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_txt.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/file_attach_xls.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_jw_emotion_del_nor.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_jw_emotion_del_prs.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_jw_face_index_nor.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_jw_face_index_prs.png" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_conversation.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/chat_image_brower_layout.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/chat_pull_to_refresh.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/face_item.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/msg_face_gridview.xml" charset="GBK" />
+  <component name="Encoding">
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
