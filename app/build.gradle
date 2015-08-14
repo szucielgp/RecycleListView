@@ -42,4 +42,5 @@ dependencies {
     compile files('libs/avoscloud-sdk-v3.1.4.jar')
     compile files('libs/avoscloud-sdk-v3.7.1.jar')
     compile files('libs/avoscloud-push-v3.7.1.jar')
+    compile files('libs/eventbus-2.4.0.jar')
 }

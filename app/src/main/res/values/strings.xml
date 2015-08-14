@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="invitation_action">com.avoscloud.chat.INVITATION_ACTION</string>
 
     <string name="app_name">HiSuper</string>
     <string name="action_settings">Settings</string>
@@ -17,7 +18,7 @@
     <string name="otherId_input_hint">请输入对方的 clientId</string>
     <string name="chat_utils_hardLoading">努力加载中...</string>
     <string name="chat_activity_loadMessagesFinish">聊天记录加载完毕</string>
-
+    <string name="chat_image">图片</string>
     <string name="chat_pull_to_refresh">下拉可以刷新</string>
     <string name="chat_release_to_refresh">释放立即刷新</string>
     <string name="chat_refreshing">正在刷新…</string>

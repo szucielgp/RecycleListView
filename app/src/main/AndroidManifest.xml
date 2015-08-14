@@ -30,7 +30,14 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
+        <receiver android:name="com.superlity.test.recyclelistviewtest.service.MyReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.avoscloud.chat.INVITATION_ACTION" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

@@ -35,6 +35,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 //import com.avos.avoscloud.im.v2.AVIMException;
@@ -50,6 +51,7 @@ import com.superlity.test.recyclelistviewtest.controller.AVIMTypedMessagesArrayC
 import com.superlity.test.recyclelistviewtest.controller.ChatManager;
 import com.superlity.test.recyclelistviewtest.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.emoji.SelectFaceHelper;
+import com.superlity.test.recyclelistviewtest.entity.MessageEvent;
 import com.superlity.test.recyclelistviewtest.resize.AutoHeightLayout;
 import com.superlity.test.recyclelistviewtest.resize.Utils;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
@@ -62,12 +64,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends Activity {
@@ -99,25 +104,33 @@ public class MainActivity extends Activity {
     private AVIMConversation conversation;
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private ChatHandler handler;
+   // private ChatHandler handler;
     static final int PAGE_SIZE = 8;
+    public static final String CONVID = "convid";
+    protected ChatManager chatManager = ChatManager.getInstance();
+    protected  EventBus eventBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        intiConversation();
+        initBus();
+        initData(getIntent());
         intiView();
         loadMessagesWhenInit(PAGE_SIZE);
+
     }
 
-    private void intiConversation() {
-        final String conversationId = getIntent().getStringExtra(EXTRA_CONVERSATION_ID);
-        Log.d(TAG, "会话 id: " + conversationId);
-        handler = new ChatHandler();
-        MessageHandler.setActivityMessageHandler(handler);
-        conversation = MyApplication.getIMClient().getConversation(conversationId);
+    private void initBus() {
+        eventBus = EventBus.getDefault();
+        eventBus.register(this);
     }
-
+    public void initData(Intent intent){
+        String convid = intent.getStringExtra(CONVID);
+        conversation = chatManager.lookUpConversationById(convid);
+        if (isConversationEmpty(conversation)) {
+            return;
+        }
+    }
     private void intiView(){
         messageList = new ArrayList<>() ;
         rec = (RecyclerView)findViewById(R.id.listview);
@@ -278,18 +291,17 @@ public class MainActivity extends Activity {
         });
     }
 
-    //跳转到此页面来的方法
-    public static void startActivity(Context context, String conversationId) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(EXTRA_CONVERSATION_ID, conversationId);
-        context.startActivity(intent);
+    private boolean isConversationEmpty(AVIMConversation conversation) {
+        if (conversation == null) {
+            Toast.makeText(MainActivity.this,"未找到对话，请退出重试。请检查是否调用了 ChatManager.registerConversation()",Toast.LENGTH_LONG).show();
+            this.finish();
+            return true;
+        }
+        return false;
     }
-
-
-
 //初始化一开始的消息
    public void loadMessagesWhenInit(int limit) {
-        ChatManager.getInstance().queryMessages(conversation, null,0, limit, new
+        ChatManager.getInstance().queryMessages(conversation, null, 0, limit, new
                 AVIMTypedMessagesArrayCallback() {
                     @Override
                     public void done(final List<AVIMTypedMessage> typedMessages, AVException e) {
@@ -301,12 +313,7 @@ public class MainActivity extends Activity {
                             if (adapter.getItemCount() != 0) {
                                 layoutManager.scrollToPosition(adapter.getItemCount() - 1);
                             }
-//                            new CacheMessagesTask(MainActivity.this, typedMessages) {
-//                                @Override
-//                                void onSucceed(List<AVIMTypedMessage> messages) {
-//
-//                                }
-//                            }.execute();
+
                         }
                     }
                 });
@@ -347,29 +354,22 @@ public class MainActivity extends Activity {
                             adapter.setMessageList(newMessages);
                             adapter.notifyDataSetChanged();
                         }
-                        //                        if (typedMessages.size()>0) {
-//                            rec.scrollToPosition(typedMessages.size() - 1);
-//                        }
-//                        if (typedMessages.size() == 0) {
-//                            Toast.makeText(MainActivity.this, "没有更多数据", Toast.LENGTH_SHORT).show();
-//                        }
-//                        new CacheMessagesTask(MainActivity.this, typedMessages) {
-//                            @Override
-//                            void onSucceed(List<AVIMTypedMessage> typedMessages) {
-//
-////                                if(typedMessages.size()>0&& typedMessages.get(0).getTimestamp()==time){
-////                                    Toast.makeText(MainActivity.this,R.string.chat_activity_loadMessagesFinish,Toast.LENGTH_SHORT).show();
-////                                    return;
-////                                }
-//
-//                            }
-//                        }.execute();
+
                     }
 
                 }
             });
         }
 
+    }
+
+    public void test(){
+        ChatManager.getInstance().queryMessages(conversation, null, 0, 3, new AVIMTypedMessagesArrayCallback() {
+            @Override
+            public void done(List<AVIMTypedMessage> typedMessages, AVException e) {
+                Log.e(">>>>", typedMessages.size() + "");
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -403,10 +403,6 @@ public class MainActivity extends Activity {
         return src;
     }
 
-    //检查是否有内容
-    public boolean hasText() {
-        return msgcontent != null && msgcontent.length() > 0;
-    }
 
     //控制发送按钮是否显示
     private void checkSendButton(boolean issend){
@@ -531,8 +527,6 @@ public class MainActivity extends Activity {
     }
 
 
-
-
     public void selectImageFromLocal() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             Intent intent = new Intent();
@@ -611,7 +605,6 @@ public class MainActivity extends Activity {
             }
 
 
-
         });
     }
 
@@ -621,7 +614,6 @@ public class MainActivity extends Activity {
         try {
             final AVIMImageMessage imageMsg = new AVIMImageMessage(newPath);
             conversation.sendMessage(imageMsg, AVIMConversation.RECEIPT_MESSAGE_FLAG, new AVIMConversationCallback() {
-
                 @Override
                 public void done(AVIMException e) {
                     if (e == null && newPath != null) {
@@ -640,9 +632,6 @@ public class MainActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-
-
-
             });
         } catch (IOException e) {
             LogUtils.logException(e);
@@ -653,28 +642,39 @@ public class MainActivity extends Activity {
         Toast.makeText(MainActivity.this,"send success!",Toast.LENGTH_SHORT).show();
     }
 
-    public class ChatHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
 
-        @Override
-        public void onMessage(AVIMTypedMessage message, AVIMConversation conversation, AVIMClient client) {
+    public void onEvent(MessageEvent messageEvent) {
+        final AVIMTypedMessage message = messageEvent.getMessage();
+        if (message.getConversationId().equals(conversation.getConversationId())) {
             if (message instanceof AVIMTextMessage) {
-                if (conversation.getConversationId().equals(MainActivity.this.conversation.getConversationId())) {
                     String msgStr = ParseEmojiMsgUtil.convertToMsg( ((AVIMTextMessage) message).getText(), MainActivity.this);
                     ((AVIMTextMessage) message).setText(msgStr);
                     adapter.add(message);
                     if(adapter.getItemCount()!=0){
                         rec.smoothScrollToPosition(adapter.getItemCount()-1);
                     }
-                }
             }else if(message instanceof AVIMImageMessage){
-                if(conversation.getConversationId().equals(MainActivity.this.conversation.getConversationId())){
                     adapter.add(message);
                     if(adapter.getItemCount()!=0){
                         rec.smoothScrollToPosition(adapter.getItemCount()-1);
                     }
-                }
             }
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ChatManager.setCurrentChattingConvid(null);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isConversationEmpty(conversation)) {
+            return;
+        }
+        ChatManager.setCurrentChattingConvid(conversation.getConversationId());
     }
     //异步任务来加载信息
     public abstract class CacheMessagesTask extends AsyncTask<Void, Void, Void> {
@@ -692,7 +692,6 @@ public class MainActivity extends Activity {
                 AVIMReservedMessageType type = AVIMReservedMessageType.getAVIMReservedMessageType(msg.getMessageType());
                 userIds.add(msg.getFrom());
             }
-
             return null;
         }
 
@@ -709,6 +708,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AVIMMessageManager.unregisterMessageHandler(AVIMTypedMessage.class, handler);
+        eventBus.unregister(this);
     }
 }

@@ -14,6 +14,8 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.activity.ImageBrowserActivity;
+import com.superlity.test.recyclelistviewtest.controller.ChatManager;
+import com.superlity.test.recyclelistviewtest.controller.MessageHelper;
 import com.superlity.test.recyclelistviewtest.emoji.EmojiParser;
 import com.superlity.test.recyclelistviewtest.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.utils.PathUtils;
@@ -201,7 +203,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     //判断消息时候来自自己
     boolean isComeMsg(AVIMTypedMessage msg) {
-        return !msg.getFrom().equals(MyApplication.getClientIdFromPre());
+       // return !msg.getFrom().equals(ChatManager.getSelfId());
+        return !MessageHelper.fromMe(msg);
     }
      @Override
      public int getItemViewType(int position) {

@@ -16,26 +16,26 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
+import com.superlity.test.recyclelistviewtest.controller.ChatManager;
+import com.superlity.test.recyclelistviewtest.service.ChatManagerAdapterImpl;
+import com.superlity.test.recyclelistviewtest.service.PushManager;
 
 
 public class MyApplication extends Application {
 
 
     private static MyApplication instance;
-    public static final String KEY_CLIENT_ID = "client_id";
-    static SharedPreferences preferences;
-    /**
-     * 单例，返回一个实例
-     * @return
-     */
     public static MyApplication getInstance() {
         return instance;
     }
@@ -44,33 +44,31 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-       AVOSCloud.setDebugLogEnabled(true);
-        // 这是用于 SimpleChat 的 app id 和 app key，如果更改将不能进入 demo 中相应的聊天室
-        AVOSCloud.initialize(this, "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm",
-                "ktslkgc5rm1kwk5hft7n5kmzdmqbu0o8vebbfvct48ybg1xk");
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // 必须在启动的时候注册 MessageHandler
-        // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理
-        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
+        AVOSCloud.setDebugLogEnabled(true);
+        AVOSCloud.setLastModifyEnabled(true);
+        final String appId = "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm";
+        final String appKey =  "ktslkgc5rm1kwk5hft7n5kmzdmqbu0o8vebbfvct48ybg1xk";
+        AVOSCloud.initialize(this,appId ,appKey);
+        savaInstall();
+        PushManager.getInstance().init(instance);
         initImageLoader(instance);
+        initChatManager();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
     }
-
-    public static String getClientIdFromPre() {
-        return preferences.getString(KEY_CLIENT_ID, "");
-    }
-
-    public static void setClientIdToPre(String id) {
-        preferences.edit().putString(KEY_CLIENT_ID, id).apply();
-    }
-
-    public static AVIMClient getIMClient() {
-        return AVIMClient.getInstance(getClientIdFromPre());
+    private void initChatManager() {
+        final ChatManager chatManager = ChatManager.getInstance();
+        chatManager.init(this);
+        if (AVUser.getCurrentUser() != null) {
+            chatManager.setupManagerWithUserId(AVUser.getCurrentUser().getObjectId());
+        }
+       // chatManager.setConversationEventHandler(ConversationManager.getEventHandler());
+        ChatManagerAdapterImpl chatManagerAdapter = new ChatManagerAdapterImpl(MyApplication.this);
+        chatManager.setChatManagerAdapter(chatManagerAdapter);
+        ChatManager.setDebugEnabled(true);
     }
     public static void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
@@ -81,5 +79,20 @@ public class MyApplication extends Application {
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    public void savaInstall(){
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            public void done(AVException e) {
+                if (e == null) {
+                    // 保存成功
+                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                    // 关联  installationId 到用户表等操作……
+                } else {
+                    // 保存失败，输出错误信息
+                }
+            }
+        });
+
     }
 }
