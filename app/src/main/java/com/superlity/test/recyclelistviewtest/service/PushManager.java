@@ -7,14 +7,14 @@ import com.avos.avoscloud.AVPush;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.PushService;
-import com.superlity.test.recyclelistviewtest.LoginActivity;
-import com.superlity.test.recyclelistviewtest.activity.EntrySplashActivity;
+import com.superlity.test.recyclelistviewtest.ui.EntrySplashActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by lzw on 15/6/11.
+ *
  */
 public class PushManager {
   public final static String AVOS_ALERT = "alert";

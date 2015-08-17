@@ -8,9 +8,7 @@ import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVUser;
 import com.superlity.test.recyclelistviewtest.MyApplication;
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.entity.User;
-
-import java.util.logging.Logger;
+import com.superlity.test.recyclelistviewtest.leancloud.entity.User;
 
 
 /**

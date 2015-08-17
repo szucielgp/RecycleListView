@@ -3,7 +3,7 @@ package com.superlity.test.recyclelistviewtest.utils;
 import android.os.Environment;
 
 
-import com.superlity.test.recyclelistviewtest.controller.ChatManager;
+import com.superlity.test.recyclelistviewtest.leancloud.ChatManager;
 
 import java.io.File;
 

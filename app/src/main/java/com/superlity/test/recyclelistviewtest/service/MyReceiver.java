@@ -8,7 +8,7 @@ import android.util.Log;
 
 
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.activity.EntrySplashActivity;
+import com.superlity.test.recyclelistviewtest.ui.EntrySplashActivity;
 import com.superlity.test.recyclelistviewtest.service.event.InvitationEvent;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 import com.superlity.test.recyclelistviewtest.utils.NotificationUtil;

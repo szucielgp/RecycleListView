@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light" >
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="Hi"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
@@ -39,13 +39,13 @@
             </intent-filter>
         </receiver>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".activity.ConversationActivity">
+        <activity android:name=".ui.ConversationActivity">
         </activity>
-        <activity android:name=".activity.ImageBrowserActivity">
+        <activity android:name=".ui.ImageBrowserActivity">
         </activity>
 
     </application>

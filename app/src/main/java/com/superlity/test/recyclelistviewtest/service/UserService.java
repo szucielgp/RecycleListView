@@ -1,10 +1,7 @@
 package com.superlity.test.recyclelistviewtest.service;
 
-import android.widget.ImageView;
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
@@ -12,16 +9,10 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.FollowCallback;
 import com.avos.avoscloud.SaveCallback;
-
-
-import com.superlity.test.recyclelistviewtest.entity.User;
+import com.superlity.test.recyclelistviewtest.leancloud.entity.User;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * Created by lzw on 14-9-15.

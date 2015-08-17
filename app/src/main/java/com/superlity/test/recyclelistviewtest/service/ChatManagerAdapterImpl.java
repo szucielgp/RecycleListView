@@ -10,11 +10,11 @@ import android.os.AsyncTask;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.superlity.test.recyclelistviewtest.MainActivity;
-import com.superlity.test.recyclelistviewtest.controller.ChatManagerAdapter;
-import com.superlity.test.recyclelistviewtest.controller.MessageHelper;
-import com.superlity.test.recyclelistviewtest.entity.User;
-import com.superlity.test.recyclelistviewtest.entity.UserInfo;
+import com.superlity.test.recyclelistviewtest.ui.ChatActivity;
+import com.superlity.test.recyclelistviewtest.leancloud.ChatManagerAdapter;
+import com.superlity.test.recyclelistviewtest.leancloud.MessageHelper;
+import com.superlity.test.recyclelistviewtest.leancloud.entity.User;
+import com.superlity.test.recyclelistviewtest.leancloud.entity.UserInfo;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 
 
@@ -82,8 +82,8 @@ public class ChatManagerAdapterImpl implements ChatManagerAdapter {
       lastNotifyTime = System.currentTimeMillis();
     }
     int icon = context.getApplicationInfo().icon;
-    Intent intent = new Intent(context, MainActivity.class);
-    intent.putExtra(MainActivity.CONVID, conv.getConversationId());
+    Intent intent = new Intent(context, ChatActivity.class);
+    intent.putExtra(ChatActivity.CONVID, conv.getConversationId());
 
     PendingIntent pend = PendingIntent.getActivity(context, new Random().nextInt(),
         intent, 0);

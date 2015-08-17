@@ -13,21 +13,16 @@
 package com.superlity.test.recyclelistviewtest;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
-import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMMessageManager;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.superlity.test.recyclelistviewtest.controller.ChatManager;
+import com.superlity.test.recyclelistviewtest.leancloud.ChatManager;
 import com.superlity.test.recyclelistviewtest.service.ChatManagerAdapterImpl;
 import com.superlity.test.recyclelistviewtest.service.PushManager;
 
