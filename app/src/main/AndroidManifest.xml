@@ -1,61 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.superlity.test.recyclelistviewtest" >
+    package="com.superlity.test.recyclelistviewtest">
 
-    <application
-        android:name=".MyApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light" >
-        <activity
-            android:name=".ui.LoginActivity"
-            android:label="Hi"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <service android:name="com.avos.avoscloud.PushService"
-            android:exported="true"
-      />
-
-        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.superlity.test.recyclelistviewtest.service.MyReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.avoscloud.chat.INVITATION_ACTION" />
-            </intent-filter>
-        </receiver>
-        <activity
-            android:name=".ui.ChatActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity android:name=".ui.ConversationActivity">
-        </activity>
-        <activity android:name=".ui.ImageBrowserActivity">
-        </activity>
-
-    </application>
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
-        android:smallScreens="true" >
-    </supports-screens>
+        android:smallScreens="true" />
+
+    <!-- 云通信权限开始 -->
+    <!-- // 允许程序打开网络sockets -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- // 允许程序访问有关的网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- // 允许程序访问Wi-Fi网络状态信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- // 允许应用写（非读）用户的外部存储器 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- // 允许读取电话的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- // 允许一个程序获取信息有关当前或最近运行的任务，一个缩略的任务状态，是否活动等等 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- // 允许程序录制音频 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- // 允许应用程序修改全局声音设置的权限 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- // GPS定位权限(非必选，由应用选择是否需要) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- // 允许程序读取用户联系人数据(非必选，由应用选择是否需要) -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- // 允许访问振动设备(非必选,由应用选择是否需要) -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- //** 如果您需要实现实时音视频功能，需要增加以下配置选项**// -->
+
+
+    <!-- // 允许程序访问Wi-Fi网络状态信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- // 允许程序禁用键盘锁(非必选,由应用选择是否需要) -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- // 允许使用PowerManager的WakeLocks保持进程在休眠时从屏幕消失(非必选,由应用选择是否需要) -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- 云通讯权限结束 -->
+
+
+    <!-- leancloud 权限开始 -->
     // 允许程序打开网络sockets
     <uses-permission android:name="android.permission.INTERNET" />
     // 允许程序访问有关的网络信息
@@ -63,7 +55,7 @@
     // 允许程序访问Wi-Fi网络状态信息
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     // 允许应用写（非读）用户的外部存储器
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     // 允许读取电话的状态
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -80,4 +72,73 @@
     // 允许访问振动设备(非必选,由应用选择是否需要)
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- leancloud 权限结束 -->
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light">
+        <activity
+            android:name=".ui.LCLoginActivity"
+            android:label="Hi"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- leancloud 配置开始 -->
+        <service
+            android:name="com.avos.avoscloud.PushService"
+            android:exported="true" />
+
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.superlity.test.recyclelistviewtest.service.MyReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.avoscloud.chat.INVITATION_ACTION" />
+            </intent-filter>
+        </receiver>
+        <!-- leancloud 配置结束 -->
+
+        <activity
+            android:name=".ui.ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.ConversationActivity" />
+        <activity android:name=".ui.ImageBrowserActivity" />
+
+        <activity android:name=".ui.CallActivity" />
+        <activity android:name=".ui.CallDialActivity" />
+        <activity android:name=".ui.YTXLoginActivity" />
+
+        <!-- 云通信配置开始 -->
+        <service
+            android:name="com.yuntongxun.ecsdk.ECClientService"
+            android:enabled="true"
+            android:exported="false" />
+
+        // 以下两项为友盟统计
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="551bf59dfd98c5b39e002032" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="yuntongxun_im_5.0.1b" />
+
+        <!-- 云通讯配置结束 -->
+
+    </application>
 </manifest>

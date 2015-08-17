@@ -15,6 +15,7 @@ package com.superlity.test.recyclelistviewtest;
 import android.app.Application;
 
 import com.superlity.test.recyclelistviewtest.leancloud.LCSDKHelper;
+import com.superlity.test.recyclelistviewtest.ytx.CCPSDKCoreHelper;
 
 
 public class MyApplication extends Application {
@@ -30,5 +31,6 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         LCSDKHelper.getInstance().init(this);
+        CCPSDKCoreHelper.getInstance().setContext(this);
     }
 }

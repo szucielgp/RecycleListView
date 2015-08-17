@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.superlity.test.recyclelistviewtest.R;
@@ -12,7 +13,7 @@ import com.superlity.test.recyclelistviewtest.utils.PhotoUtils;
 /**
  * Created by lzw on 14-9-21.
  */
-public class ImageBrowserActivity extends Activity {
+public class ImageBrowserActivity extends AppCompatActivity {
   private static final String PATH = "path";
   private static final String URL = "url";
   private ImageView imageView;

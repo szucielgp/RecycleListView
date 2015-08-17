@@ -28,4 +28,8 @@
 		android:title="Back"
 		android:orderInCategory="100"
 		/>
+	<item android:id="@+id/voip"
+		android:icon="@drawable/ic_ab_back_grey"
+		android:title="voip"
+		android:orderInCategory="100"/>
 </menu>

@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile files('libs/android-async-http-1.4.6.jar')
@@ -43,4 +43,5 @@ dependencies {
     compile files('libs/avoscloud-sdk-v3.7.1.jar')
     compile files('libs/avoscloud-push-v3.7.1.jar')
     compile files('libs/eventbus-2.4.0.jar')
+    compile files('libs/YTX_Android_Full_SDK_v5.1.4r.jar')
 }

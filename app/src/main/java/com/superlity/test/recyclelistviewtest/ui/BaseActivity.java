@@ -1,11 +1,10 @@
 package com.superlity.test.recyclelistviewtest.ui;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
   protected boolean filterException(Exception e) {
     if (e != null) {

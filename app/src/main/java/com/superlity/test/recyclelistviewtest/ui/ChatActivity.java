@@ -1,6 +1,5 @@
 package com.superlity.test.recyclelistviewtest.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -10,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMConversation;
-//import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
@@ -39,19 +38,18 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.ui.adapter.RecycleViewAdapter;
 import com.superlity.test.recyclelistviewtest.leancloud.AVIMTypedMessagesArrayCallback;
 import com.superlity.test.recyclelistviewtest.leancloud.ChatManager;
+import com.superlity.test.recyclelistviewtest.leancloud.entity.MessageEvent;
+import com.superlity.test.recyclelistviewtest.ui.adapter.RecycleViewAdapter;
 import com.superlity.test.recyclelistviewtest.ui.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.ui.emoji.SelectFaceHelper;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.MessageEvent;
 import com.superlity.test.recyclelistviewtest.ui.resize.AutoHeightLayout;
 import com.superlity.test.recyclelistviewtest.ui.resize.Utils;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 import com.superlity.test.recyclelistviewtest.utils.PathUtils;
 import com.superlity.test.recyclelistviewtest.utils.PhotoUtils;
 import com.superlity.test.recyclelistviewtest.utils.ProviderPathUtils;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +61,7 @@ import java.util.Set;
 import de.greenrobot.event.EventBus;
 
 
-public class ChatActivity extends Activity {
+public class ChatActivity extends AppCompatActivity {
     private RecyclerView rec;
     private EditText msgcontent;
     private ImageView sendButton;
@@ -103,7 +101,7 @@ public class ChatActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
         initBus();
         initData(getIntent());
         intiView();
@@ -442,6 +440,11 @@ public class ChatActivity extends Activity {
                                 break;
                             case R.id.exit:
                                 popup.dismiss();
+                                break;
+
+                            case R.id.voip:
+                                Intent intent = new Intent(ChatActivity.this, YTXLoginActivity.class);
+                                startActivity(intent);
                                 break;
 
                             default:
