@@ -18,6 +18,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 
+import com.superlity.test.recyclelistviewtest.leancloud.entity.ConversationType;
 import com.superlity.test.recyclelistviewtest.leancloud.entity.MessageEvent;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 

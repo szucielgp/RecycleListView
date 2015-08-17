@@ -8,7 +8,6 @@ import com.avos.avoscloud.AVUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.superlity.test.recyclelistviewtest.service.ChatManagerAdapterImpl;
 import com.superlity.test.recyclelistviewtest.service.PushManager;
 
 /**

@@ -5,7 +5,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.Constant;
+import com.superlity.test.recyclelistviewtest.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.Collections;

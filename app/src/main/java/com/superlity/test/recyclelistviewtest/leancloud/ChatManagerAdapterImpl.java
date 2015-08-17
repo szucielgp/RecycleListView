@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.service;
+package com.superlity.test.recyclelistviewtest.leancloud;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.superlity.test.recyclelistviewtest.service.CacheService;
+import com.superlity.test.recyclelistviewtest.service.PreferenceMap;
 import com.superlity.test.recyclelistviewtest.ui.ChatActivity;
 import com.superlity.test.recyclelistviewtest.leancloud.ChatManagerAdapter;
 import com.superlity.test.recyclelistviewtest.leancloud.MessageHelper;

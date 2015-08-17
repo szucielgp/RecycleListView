@@ -21,6 +21,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/7/10.
+ *
  */
 public class MyReceiver extends BroadcastReceiver {
 

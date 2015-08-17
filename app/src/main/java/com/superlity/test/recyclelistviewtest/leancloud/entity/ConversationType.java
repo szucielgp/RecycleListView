@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.leancloud;
+package com.superlity.test.recyclelistviewtest.leancloud.entity;
 
 
 /**

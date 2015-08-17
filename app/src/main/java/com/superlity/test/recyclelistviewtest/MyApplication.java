@@ -11,26 +11,16 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 package com.superlity.test.recyclelistviewtest;
-import android.app.Application;
-import android.content.Context;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVInstallation;
-import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SaveCallback;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.superlity.test.recyclelistviewtest.leancloud.ChatManager;
-import com.superlity.test.recyclelistviewtest.service.ChatManagerAdapterImpl;
-import com.superlity.test.recyclelistviewtest.service.PushManager;
+import android.app.Application;
+
+import com.superlity.test.recyclelistviewtest.leancloud.LCSDKHelper;
 
 
 public class MyApplication extends Application {
 
-
     private static MyApplication instance;
+
     public static MyApplication getInstance() {
         return instance;
     }
@@ -39,55 +29,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        AVOSCloud.setDebugLogEnabled(true);
-        AVOSCloud.setLastModifyEnabled(true);
-        final String appId = "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm";
-        final String appKey =  "ktslkgc5rm1kwk5hft7n5kmzdmqbu0o8vebbfvct48ybg1xk";
-        AVOSCloud.initialize(this,appId ,appKey);
-        savaInstall();
-        PushManager.getInstance().init(instance);
-        initImageLoader(instance);
-        initChatManager();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
-    private void initChatManager() {
-        final ChatManager chatManager = ChatManager.getInstance();
-        chatManager.init(this);
-        if (AVUser.getCurrentUser() != null) {
-            chatManager.setupManagerWithUserId(AVUser.getCurrentUser().getObjectId());
-        }
-       // chatManager.setConversationEventHandler(ConversationManager.getEventHandler());
-        ChatManagerAdapterImpl chatManagerAdapter = new ChatManagerAdapterImpl(MyApplication.this);
-        chatManager.setChatManagerAdapter(chatManagerAdapter);
-        ChatManager.setDebugEnabled(true);
-    }
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                context)
-                .threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
-                        //.memoryCache(new WeakMemoryCache())
-                .denyCacheImageMultipleSizesInMemory()
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .build();
-        ImageLoader.getInstance().init(config);
-    }
-
-    public void savaInstall(){
-        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
-            public void done(AVException e) {
-                if (e == null) {
-                    // 保存成功
-                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
-                    // 关联  installationId 到用户表等操作……
-                } else {
-                    // 保存失败，输出错误信息
-                }
-            }
-        });
-
+        LCSDKHelper.getInstance().init(this);
     }
 }

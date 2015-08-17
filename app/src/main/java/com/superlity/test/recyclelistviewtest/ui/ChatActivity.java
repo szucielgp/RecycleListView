@@ -65,15 +65,15 @@ import de.greenrobot.event.EventBus;
 
 public class ChatActivity extends Activity {
     private RecyclerView rec;
-    private EditText  msgcontent ;
+    private EditText msgcontent;
     private ImageView sendButton;
     private ImageView emojiButton;
     private ImageView attchButton;
-    private  PopupMenu popup;
+    private PopupMenu popup;
     private RecycleViewAdapter adapter;
     public List<AVIMTypedMessage> messageList;
-    private  String content_str;
-    public  LinearLayoutManager layoutManager;
+    private String content_str;
+    public LinearLayoutManager layoutManager;
     public InputMethodManager imm;
     public PopupWindow pop;
     private View emojiView;
@@ -81,22 +81,25 @@ public class ChatActivity extends Activity {
     public SwipeRefreshLayout swipeRefreshLayout;
     //消息部分的定义
     private SelectFaceHelper mFaceHelper;
-    /**选择图片拍照路径*/
+    /**
+     * 选择图片拍照路径
+     */
     public String localCameraPath = PathUtils.getPicturePathByCurrentTime();
     private static final int TAKE_CAMERA_REQUEST = 2;
-    private static final int  TAKE_CROP_PHOTO = 1;
+    private static final int TAKE_CROP_PHOTO = 1;
     private static final int GALLERY_REQUEST = 0;
     private static final int GALLERY_KITKAT_REQUEST = 3;
 
-//会话ID
+    //会话ID
     private AVIMConversation conversation;
     private static final String EXTRA_CONVERSATION_ID = "conversation_id";
     private static final String TAG = ChatActivity.class.getSimpleName();
-   // private ChatHandler handler;
+    // private ChatHandler handler;
     static final int PAGE_SIZE = 8;
     public static final String CONVID = "convid";
     protected ChatManager chatManager = ChatManager.getInstance();
-    protected  EventBus eventBus;
+    protected EventBus eventBus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,16 +115,18 @@ public class ChatActivity extends Activity {
         eventBus = EventBus.getDefault();
         eventBus.register(this);
     }
-    public void initData(Intent intent){
+
+    public void initData(Intent intent) {
         String convid = intent.getStringExtra(CONVID);
         conversation = chatManager.lookUpConversationById(convid);
         if (isConversationEmpty(conversation)) {
             return;
         }
     }
-    private void intiView(){
-        messageList = new ArrayList<>() ;
-        rec = (RecyclerView)findViewById(R.id.listview);
+
+    private void intiView() {
+        messageList = new ArrayList<>();
+        rec = (RecyclerView) findViewById(R.id.listview);
         msgcontent = (EditText) findViewById(R.id.msg_text);
         sendButton = (ImageView) findViewById(R.id.send_btn);
         emojiButton = (ImageView) findViewById(R.id.msg_smile);
@@ -173,7 +178,7 @@ public class ChatActivity extends Activity {
         adapter = new RecycleViewAdapter(ChatActivity.this);
         rec.setAdapter(adapter);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadOldMessages();
@@ -207,7 +212,7 @@ public class ChatActivity extends Activity {
                     msgcontent.setFocusable(true);
                     msgcontent.setFocusableInTouchMode(true);
                 }
-                if(adapter.getItemCount()!=0){
+                if (adapter.getItemCount() != 0) {
                     rec.smoothScrollToPosition(adapter.getItemCount());
                 }
                 return false;
@@ -253,15 +258,15 @@ public class ChatActivity extends Activity {
                         emojiButton.setImageResource(R.drawable.ic_msg_panel_smiles);
                         resizelayout.showAutoView();
                         Utils.closeSoftKeyboard(ChatActivity.this);
-                        if(adapter.getItemCount()!=0){
-                            rec.smoothScrollToPosition(adapter.getItemCount()-1);
+                        if (adapter.getItemCount() != 0) {
+                            rec.smoothScrollToPosition(adapter.getItemCount() - 1);
                         }
                         break;
                     case AutoHeightLayout.KEYBOARD_STATE_FUNC:
                         Utils.openSoftKeyboard(msgcontent);
                         emojiButton.setImageResource(R.drawable.ic_msg_panel_kb);
-                        if(adapter.getItemCount()!=0){
-                            rec.smoothScrollToPosition(adapter.getItemCount()-1);
+                        if (adapter.getItemCount() != 0) {
+                            rec.smoothScrollToPosition(adapter.getItemCount() - 1);
                         }
 
                         break;
@@ -271,7 +276,7 @@ public class ChatActivity extends Activity {
         });
 
         //对附加按钮的处理
-        attchButton.setOnClickListener(new View.OnClickListener(){
+        attchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onPopupButtonClick(attchButton);
@@ -281,14 +286,15 @@ public class ChatActivity extends Activity {
 
     private boolean isConversationEmpty(AVIMConversation conversation) {
         if (conversation == null) {
-            Toast.makeText(ChatActivity.this,"未找到对话，请退出重试。请检查是否调用了 ChatManager.registerConversation()",Toast.LENGTH_LONG).show();
+            Toast.makeText(ChatActivity.this, "未找到对话，请退出重试。请检查是否调用了 ChatManager.registerConversation()", Toast.LENGTH_LONG).show();
             this.finish();
             return true;
         }
         return false;
     }
-//初始化一开始的消息
-   public void loadMessagesWhenInit(int limit) {
+
+    //初始化一开始的消息
+    public void loadMessagesWhenInit(int limit) {
         ChatManager.getInstance().queryMessages(conversation, null, 0, limit, new
                 AVIMTypedMessagesArrayCallback() {
                     @Override
@@ -306,15 +312,16 @@ public class ChatActivity extends Activity {
                     }
                 });
     }
-//刷新之前的消息
+
+    //刷新之前的消息
     public void loadOldMessages() {
         if (adapter.getMessageList().size() < PAGE_SIZE) {
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(ChatActivity.this,"没有更多数据~",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChatActivity.this, "没有更多数据~", Toast.LENGTH_SHORT).show();
             return;
         } else {
             AVIMTypedMessage firstMsg = adapter.getMessageList().get(0);
-            final  String msgId = firstMsg.getMessageId();
+            final String msgId = firstMsg.getMessageId();
             final long time = firstMsg.getTimestamp();
             ChatManager.getInstance().queryMessages(conversation, msgId, time, PAGE_SIZE, new AVIMTypedMessagesArrayCallback() {
                 @Override
@@ -324,18 +331,18 @@ public class ChatActivity extends Activity {
                     } else {
                         if (typedMessages.size() == 0) {
                             Toast.makeText(ChatActivity.this, "没有更多数据0", Toast.LENGTH_SHORT).show();
-                        }else if(typedMessages.size()<PAGE_SIZE){
-                            if (typedMessages.get(0).getTimestamp()==time){
+                        } else if (typedMessages.size() < PAGE_SIZE) {
+                            if (typedMessages.get(0).getTimestamp() == time) {
                                 Toast.makeText(ChatActivity.this, "没有更多数据！", Toast.LENGTH_SHORT).show();
                                 return;
-                            }else{
+                            } else {
                                 List<AVIMTypedMessage> newMessages = new ArrayList<>(typedMessages.size());
                                 newMessages.addAll(typedMessages);
                                 newMessages.addAll(adapter.getMessageList());
                                 adapter.setMessageList(newMessages);
                                 adapter.notifyDataSetChanged();
                             }
-                        }else {
+                        } else {
                             List<AVIMTypedMessage> newMessages = new ArrayList<>(PAGE_SIZE);
                             newMessages.addAll(typedMessages);
                             newMessages.addAll(adapter.getMessageList());
@@ -351,7 +358,7 @@ public class ChatActivity extends Activity {
 
     }
 
-    public void test(){
+    public void test() {
         ChatManager.getInstance().queryMessages(conversation, null, 0, 3, new AVIMTypedMessagesArrayCallback() {
             @Override
             public void done(List<AVIMTypedMessage> typedMessages, AVException e) {
@@ -359,6 +366,7 @@ public class ChatActivity extends Activity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -373,7 +381,6 @@ public class ChatActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     //去除字符串
@@ -393,33 +400,28 @@ public class ChatActivity extends Activity {
 
 
     //控制发送按钮是否显示
-    private void checkSendButton(boolean issend){
+    private void checkSendButton(boolean issend) {
         String message = getTrimmedString(msgcontent.getText().toString());
-        if(message.length()>0 && issend){
+        if (message.length() > 0 && issend) {
             attchButton.setVisibility(View.GONE);
             sendButton.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             attchButton.setVisibility(View.VISIBLE);
             sendButton.setVisibility(View.GONE);
         }
     }
 
     //附件弹出的菜单项
-    public void onPopupButtonClick(final View button)
-    {
+    public void onPopupButtonClick(final View button) {
 
         popup = new PopupMenu(this, button);
         // 将R.menu.popup_menu菜单资源加载到popup菜单中
         getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(
-                new PopupMenu.OnMenuItemClickListener()
-                {
+                new PopupMenu.OnMenuItemClickListener() {
                     @Override
-                    public boolean onMenuItemClick(MenuItem item)
-                    {
-                        switch (item.getItemId())
-                        {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
                             case R.id.take_photo:
                                 Toast.makeText(ChatActivity.this,
                                         "您单击了【" + item.getTitle() + "】菜单项"
@@ -454,20 +456,19 @@ public class ChatActivity extends Activity {
     }
 
 
-
-
     SelectFaceHelper.OnFaceOprateListener mOnFaceOprateListener = new SelectFaceHelper.OnFaceOprateListener() {
         @Override
         public void onFaceSelected(SpannableString spanEmojiStr) {
             if (null != spanEmojiStr) {
                 msgcontent.append(spanEmojiStr);
             }
-            if ( msgcontent != null) {
+            if (msgcontent != null) {
                 msgcontent.setFocusable(true);
                 msgcontent.setFocusableInTouchMode(true);
                 msgcontent.requestFocus();
             }
         }
+
         @Override
         public void onFaceDeleted() {
 
@@ -502,7 +503,8 @@ public class ChatActivity extends Activity {
         }
         return super.dispatchKeyEvent(event);
     }
-//对edittext是否获得焦点的判断
+
+    //对edittext是否获得焦点的判断
     private void setEditableState(boolean b) {
         if (b) {
             msgcontent.setFocusable(true);
@@ -529,6 +531,7 @@ public class ChatActivity extends Activity {
             startActivityForResult(intent, GALLERY_KITKAT_REQUEST);
         }
     }
+
     public void selectImageFromCamera() {
         Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         //Intent takePictureIntent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -563,7 +566,7 @@ public class ChatActivity extends Activity {
                     sendImage(localSelectPath);
                     break;
                 case TAKE_CAMERA_REQUEST:
-                   // Intent data  = new Intent("com.android.camera.action.CROP");
+                    // Intent data  = new Intent("com.android.camera.action.CROP");
 
                     sendImage(localCameraPath);
                     break;
@@ -596,7 +599,7 @@ public class ChatActivity extends Activity {
         });
     }
 
-    public void sendImage(String imagePath){
+    public void sendImage(String imagePath) {
         final String newPath = PathUtils.getChatFilePath(com.superlity.test.recyclelistviewtest.utils.Utils.uuid());
         PhotoUtils.compressImage(imagePath, newPath);
         try {
@@ -616,7 +619,7 @@ public class ChatActivity extends Activity {
                             layoutManager.scrollToPosition(adapter.getItemCount() - 1);
                         }
                         finishSend();
-                    }else if(e!=null){
+                    } else if (e != null) {
                         e.printStackTrace();
                     }
                 }
@@ -627,7 +630,7 @@ public class ChatActivity extends Activity {
     }
 
     public void finishSend() {
-        Toast.makeText(ChatActivity.this,"send success!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChatActivity.this, "send success!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -635,17 +638,17 @@ public class ChatActivity extends Activity {
         final AVIMTypedMessage message = messageEvent.getMessage();
         if (message.getConversationId().equals(conversation.getConversationId())) {
             if (message instanceof AVIMTextMessage) {
-                    String msgStr = ParseEmojiMsgUtil.convertToMsg( ((AVIMTextMessage) message).getText(), ChatActivity.this);
-                    ((AVIMTextMessage) message).setText(msgStr);
-                    adapter.add(message);
-                    if(adapter.getItemCount()!=0){
-                        rec.smoothScrollToPosition(adapter.getItemCount()-1);
-                    }
-            }else if(message instanceof AVIMImageMessage){
-                    adapter.add(message);
-                    if(adapter.getItemCount()!=0){
-                        rec.smoothScrollToPosition(adapter.getItemCount()-1);
-                    }
+                String msgStr = ParseEmojiMsgUtil.convertToMsg(((AVIMTextMessage) message).getText(), ChatActivity.this);
+                ((AVIMTextMessage) message).setText(msgStr);
+                adapter.add(message);
+                if (adapter.getItemCount() != 0) {
+                    rec.smoothScrollToPosition(adapter.getItemCount() - 1);
+                }
+            } else if (message instanceof AVIMImageMessage) {
+                adapter.add(message);
+                if (adapter.getItemCount() != 0) {
+                    rec.smoothScrollToPosition(adapter.getItemCount() - 1);
+                }
             }
         }
     }
@@ -656,6 +659,7 @@ public class ChatActivity extends Activity {
         super.onPause();
         ChatManager.setCurrentChattingConvid(null);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -664,6 +668,7 @@ public class ChatActivity extends Activity {
         }
         ChatManager.setCurrentChattingConvid(conversation.getConversationId());
     }
+
     //异步任务来加载信息
     public abstract class CacheMessagesTask extends AsyncTask<Void, Void, Void> {
         private List<AVIMTypedMessage> messages;
@@ -685,14 +690,16 @@ public class ChatActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (e!=null) {
+            if (e != null) {
                 e.printStackTrace();
-            }else{
+            } else {
                 onSucceed(messages);
             }
         }
+
         abstract void onSucceed(List<AVIMTypedMessage> messages);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
