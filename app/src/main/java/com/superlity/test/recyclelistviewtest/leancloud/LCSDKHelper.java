@@ -12,7 +12,7 @@ import com.superlity.test.recyclelistviewtest.service.PushManager;
 
 /**
  * Created by lion on 2015/8/14 0014.
- *
+ * leancloud 初始化工具类
  */
 public class LCSDKHelper {
 

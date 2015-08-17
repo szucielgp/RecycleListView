@@ -9,5 +9,5 @@ import java.util.List;
  * im 消息回调接口
  */
 public interface AVIMTypedMessagesArrayCallback {
-  void done(List<AVIMTypedMessage> typedMessages, AVException e);
+    void done(List<AVIMTypedMessage> typedMessages, AVException e);
 }

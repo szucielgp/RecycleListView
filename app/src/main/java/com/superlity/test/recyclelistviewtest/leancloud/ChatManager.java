@@ -419,8 +419,8 @@ public class ChatManager extends AVIMClientEventHandler {
     /**
      * 登出应用
      */
-    public void logout(){
-        if ( this.selfId == null ){
+    public void logout() {
+        if (this.selfId == null) {
             return;
         }
         AVIMClient.getInstance(this.selfId).close(new AVIMClientCallback() {

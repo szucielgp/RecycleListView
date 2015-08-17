@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Created by lzw on 15/6/11.
- *
+ * 推送管理器
  */
 public class PushManager {
   public final static String AVOS_ALERT = "alert";
