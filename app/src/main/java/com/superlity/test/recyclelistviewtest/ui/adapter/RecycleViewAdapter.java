@@ -1,18 +1,22 @@
 package com.superlity.test.recyclelistviewtest.ui.adapter;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.superlity.test.recyclelistviewtest.R;
 import com.superlity.test.recyclelistviewtest.ui.ImageBrowserActivity;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.MessageHelper;
@@ -36,7 +40,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private Context context;
     private List<AVIMTypedMessage> messageList = new ArrayList<AVIMTypedMessage>();
     private static PrettyTime prettyTime = new PrettyTime();
-
     private enum MsgViewType {
         ComeText(0), ToText(1), ComeImage(2), ToImage(3);
         int value;
@@ -113,8 +116,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 2:
                 final AVIMImageMessage imageMsg = (AVIMImageMessage) messageList.get(position);
-                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(imageMsg.getMessageId()),
-                        imageMsg.getFileUrl());
+              //  PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(imageMsg.getMessageId()),
+//                        imageMsg.getFileUrl());
+                Uri uri  = Uri.parse(imageMsg.getFileUrl());
+                holder.mImageView.setImageURI(uri);
+                holder.mImageView.setMinimumWidth(imageMsg.getWidth());
+                holder.mImageView.setMinimumHeight(imageMsg.getHeight() / 2);
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         imageMsg.getTimestamp())) {
                     holder.tTextView.setVisibility(View.VISIBLE);
@@ -131,8 +138,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 3:
                 final AVIMImageMessage image = (AVIMImageMessage) messageList.get(position);
-                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
-                        image.getFileUrl());
+//                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
+//                        image.getFileUrl());
+                Uri urito  = Uri.parse(image.getFileUrl());
+                holder.mImageView.setImageURI(urito);
+              //  holder.mImageView.setMinimumWidth(image.getWidth());
+              //  holder.mImageView.setMinimumHeight(image.getHeight() / 2);
+//                holder.mImageView.setMaxWidth(image.getWidth());
+//                holder.mImageView.setMaxHeight(image.getHeight());
+                holder.mImageView.setLayoutParams(new RelativeLayout.LayoutParams(image.getWidth(),image.getHeight()));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         image.getTimestamp())) {
                     holder.tTextView.setVisibility(View.VISIBLE);
@@ -173,7 +187,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public TextView tTextView;
-        public ImageView mImageView;
+        public ImageView mImageView2;
+        public com.facebook.drawee.view.SimpleDraweeView mImageView;
 
         public ViewHolder(View v) {
             super(v);
@@ -189,10 +204,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 mTextView = (TextView) v.findViewById(R.id.tv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
             } else if (ViewType == 2) {
-                mImageView = (ImageView) v.findViewById(R.id.iv1);
+                mImageView = (SimpleDraweeView) v.findViewById(R.id.iv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
             } else if (ViewType == 3) {
-                mImageView = (ImageView) v.findViewById(R.id.iv1);
+                mImageView = (SimpleDraweeView) v.findViewById(R.id.iv1);
                 tTextView = (TextView) v.findViewById(R.id.time);
             }
         }

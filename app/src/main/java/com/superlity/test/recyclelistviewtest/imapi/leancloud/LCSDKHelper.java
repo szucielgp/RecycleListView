@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -44,6 +45,7 @@ public class LCSDKHelper {
 //        initInstallationId();
         initImageLoader(context);
         initChatManager(context);
+        Fresco.initialize(context);
     }
 
     private void initChatManager( Context context ) {
