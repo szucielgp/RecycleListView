@@ -9,7 +9,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.superlity.test.recyclelistviewtest.imapi.service.PushManager;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.service.PushManager;
 
 /**
  * Created by lion on 2015/8/14 0014.

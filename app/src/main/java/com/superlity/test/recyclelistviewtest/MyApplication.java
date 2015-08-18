@@ -19,17 +19,9 @@ import com.superlity.test.recyclelistviewtest.imapi.ytx.CCPSDKCoreHelper;
 
 
 public class MyApplication extends Application {
-
-    private static MyApplication instance;
-
-    public static MyApplication getInstance() {
-        return instance;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
         LCSDKHelper.getInstance().init(this);
         CCPSDKCoreHelper.getInstance().setContext(this);
     }

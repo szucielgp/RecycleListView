@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.imapi.service;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.superlity.test.recyclelistviewtest.R;
 import com.superlity.test.recyclelistviewtest.ui.EntrySplashActivity;
-import com.superlity.test.recyclelistviewtest.imapi.service.event.InvitationEvent;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.service.event.InvitationEvent;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 import com.superlity.test.recyclelistviewtest.utils.NotificationUtil;
 
@@ -21,6 +21,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/7/10.
+ * 接收推送广播消息Receiver
  */
 public class MyReceiver extends BroadcastReceiver {
 
