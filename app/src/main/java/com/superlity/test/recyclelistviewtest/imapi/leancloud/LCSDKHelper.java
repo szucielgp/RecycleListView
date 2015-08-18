@@ -19,7 +19,7 @@ public class LCSDKHelper {
 
     private static final String TAG = "LCSDKHelper";
     private static final String APPID = "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm";
-    private static final String APPKEY = "d9gdw2cwdszg97mgwnys4a7hal9pykqcvgde8xzsmf1qybtm";
+    private static final String APPKEY = "ktslkgc5rm1kwk5hft7n5kmzdmqbu0o8vebbfvct48ybg1xk";
 
     private static LCSDKHelper instance;
 

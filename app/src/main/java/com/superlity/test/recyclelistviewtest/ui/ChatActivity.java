@@ -540,8 +540,8 @@ public class ChatActivity extends AppCompatActivity {
             startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.chat_activity_select_picture)),
                     GALLERY_REQUEST);
         } else {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-//            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
             startActivityForResult(intent, GALLERY_KITKAT_REQUEST);
         }
@@ -576,9 +576,9 @@ public class ChatActivity extends AppCompatActivity {
                         //for Android 4.4
                         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ){
                             uri = intent.getData();
-                            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+//                            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
                             String localSelectPath = ProviderPathUtils.getPath(this, uri);
                             sendImage(localSelectPath);
                         }
@@ -623,8 +623,8 @@ public class ChatActivity extends AppCompatActivity {
         final String newPath = PathUtils.getChatFilePath(com.superlity.test.recyclelistviewtest.utils.Utils.uuid());
         PhotoUtils.compressImage(imagePath, newPath);
         try {
-            final AVIMImageMessage imageMsg = new AVIMImageMessage(newPath);
-            conversation.sendMessage(imageMsg, AVIMConversation.RECEIPT_MESSAGE_FLAG, new AVIMConversationCallback() {
+            final AVIMImageMessage imageMsg = new AVIMImageMessage(newPath);//
+            conversation.sendMessage(imageMsg,AVIMConversation.RECEIPT_MESSAGE_FLAG,new AVIMConversationCallback() {
                 @Override
                 public void done(AVIMException e) {
                     if (e == null && newPath != null) {
@@ -640,6 +640,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
                         finishSend();
                     } else if (e != null) {
+                        Log.e(">>>>>>>>",e.toString());
                         e.printStackTrace();
                     }
                 }

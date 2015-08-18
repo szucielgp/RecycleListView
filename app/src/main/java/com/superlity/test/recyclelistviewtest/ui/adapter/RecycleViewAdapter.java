@@ -138,9 +138,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 3:
                 final AVIMImageMessage image = (AVIMImageMessage) messageList.get(position);
-//                PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
+  //              PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
 //                        image.getFileUrl());
-                Uri urito  = Uri.parse(image.getFileUrl());
+              //  Uri urito  = Uri.parse(image.getFileUrl());
+                Uri urito  = Uri.parse(PathUtils.getChatFilePath(image.getMessageId()));
                 holder.mImageView.setImageURI(urito);
               //  holder.mImageView.setMinimumWidth(image.getWidth());
               //  holder.mImageView.setMinimumHeight(image.getHeight() / 2);
