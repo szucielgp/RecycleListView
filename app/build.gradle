@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0 rc3"
 
     defaultConfig {
         applicationId "com.superlity.test.recyclelistviewtest"
@@ -44,4 +44,5 @@ dependencies {
     compile files('libs/avoscloud-push-v3.7.1.jar')
     compile files('libs/eventbus-2.4.0.jar')
     compile files('libs/YTX_Android_Full_SDK_v5.1.4r.jar')
+    compile 'com.android.support:design:22.2.1'
 }

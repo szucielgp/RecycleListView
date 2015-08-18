@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.ytx.entity;
+package com.superlity.test.recyclelistviewtest.imapi.ytx.entity;
 
 /**
  * Created by lion on 2015/8/12 0012.

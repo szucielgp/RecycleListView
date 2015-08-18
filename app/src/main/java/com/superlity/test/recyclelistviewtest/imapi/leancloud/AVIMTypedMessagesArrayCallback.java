@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.leancloud;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;

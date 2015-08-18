@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.leancloud.entity;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud.entity;
 
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 

@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.ytx.AccountSettings;
-import com.superlity.test.recyclelistviewtest.ytx.CCPSDKCoreHelper;
-import com.superlity.test.recyclelistviewtest.ytx.Constant;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.AccountSettings;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.CCPSDKCoreHelper;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.Constant;
 
 public class YTXLoginActivity extends AppCompatActivity {
 

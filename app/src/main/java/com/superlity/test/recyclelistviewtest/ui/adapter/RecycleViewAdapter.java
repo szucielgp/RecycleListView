@@ -15,7 +15,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.R;
 import com.superlity.test.recyclelistviewtest.ui.ImageBrowserActivity;
-import com.superlity.test.recyclelistviewtest.leancloud.MessageHelper;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.MessageHelper;
 import com.superlity.test.recyclelistviewtest.ui.emoji.EmojiParser;
 import com.superlity.test.recyclelistviewtest.ui.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.utils.PathUtils;

@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.service;
+package com.superlity.test.recyclelistviewtest.imapi.service;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.service;
+package com.superlity.test.recyclelistviewtest.imapi.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,7 @@ import com.avos.avoscloud.AVGeoPoint;
 import com.avos.avoscloud.AVUser;
 import com.superlity.test.recyclelistviewtest.MyApplication;
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.User;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.User;
 
 
 /**

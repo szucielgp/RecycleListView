@@ -14,8 +14,8 @@ package com.superlity.test.recyclelistviewtest;
 
 import android.app.Application;
 
-import com.superlity.test.recyclelistviewtest.leancloud.LCSDKHelper;
-import com.superlity.test.recyclelistviewtest.ytx.CCPSDKCoreHelper;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.LCSDKHelper;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.CCPSDKCoreHelper;
 
 
 public class MyApplication extends Application {

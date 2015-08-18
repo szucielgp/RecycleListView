@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.ytx.CCPSDKCoreHelper;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.CCPSDKCoreHelper;
 import com.yuntongxun.ecsdk.ECDevice;
 import com.yuntongxun.ecsdk.ECVoIPCallManager;
 

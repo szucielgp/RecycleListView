@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -38,9 +39,9 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.leancloud.AVIMTypedMessagesArrayCallback;
-import com.superlity.test.recyclelistviewtest.leancloud.ChatManager;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.MessageEvent;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.AVIMTypedMessagesArrayCallback;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.ChatManager;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.MessageEvent;
 import com.superlity.test.recyclelistviewtest.ui.adapter.RecycleViewAdapter;
 import com.superlity.test.recyclelistviewtest.ui.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.ui.emoji.SelectFaceHelper;
@@ -62,6 +63,8 @@ import de.greenrobot.event.EventBus;
 
 
 public class ChatActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
     private RecyclerView rec;
     private EditText msgcontent;
     private ImageView sendButton;
@@ -107,6 +110,8 @@ public class ChatActivity extends AppCompatActivity {
         intiView();
         loadMessagesWhenInit(PAGE_SIZE);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void initBus() {

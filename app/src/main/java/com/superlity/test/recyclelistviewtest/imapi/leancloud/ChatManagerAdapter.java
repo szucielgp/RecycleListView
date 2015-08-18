@@ -1,10 +1,10 @@
-package com.superlity.test.recyclelistviewtest.leancloud;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud;
 
 import android.content.Context;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.UserInfo;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.UserInfo;
 
 import java.util.List;
 

@@ -27,23 +27,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登陆"
-            android:textSize="50sp" />
-
-        <EditText
             android:id="@+id/client_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入您的账号" />
+            android:text="@string/welcome"
+            android:textSize="50sp" />
+
+        <EditText
+            android:id="@+id/otherIdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/otherId_input_hint" />
+
     </LinearLayout>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/chat_with_other"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/Theme"
-        android:text="登陆" />
+        android:text="@string/begin_chat" />
 
 </LinearLayout>

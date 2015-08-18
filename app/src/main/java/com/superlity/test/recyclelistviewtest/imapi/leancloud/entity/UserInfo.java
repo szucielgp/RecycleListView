@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.leancloud.entity;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud.entity;
 
 /**
  * Created by lzw on 15/4/26.

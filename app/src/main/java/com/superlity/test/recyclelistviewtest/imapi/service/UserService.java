@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.service;
+package com.superlity.test.recyclelistviewtest.imapi.service;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
@@ -9,7 +9,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.FollowCallback;
 import com.avos.avoscloud.SaveCallback;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.User;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.User;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

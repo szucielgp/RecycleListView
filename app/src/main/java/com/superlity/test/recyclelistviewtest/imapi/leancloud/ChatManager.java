@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.leancloud;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud;
 
 import android.content.Context;
 
@@ -18,8 +18,8 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 
-import com.superlity.test.recyclelistviewtest.leancloud.entity.ConversationType;
-import com.superlity.test.recyclelistviewtest.leancloud.entity.MessageEvent;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.MessageEvent;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.ConversationType;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 
 import de.greenrobot.event.EventBus;
@@ -163,6 +163,11 @@ public class ChatManager extends AVIMClientEventHandler {
         });
     }
 
+    public void login(String selfId, AVIMClientCallback avimClientCallback) {
+        setupManagerWithUserId(selfId);
+        openClient(avimClientCallback);
+    }
+
     private void onMessageReceipt(AVIMTypedMessage message) {
         MessageEvent messageEvent = new MessageEvent(message, MessageEvent.Type.Receipt);
         eventBus.post(messageEvent);
@@ -186,27 +191,6 @@ public class ChatManager extends AVIMClientEventHandler {
                 || !currentChattingConvid.equals(message.getConversationId())) {
             chatManagerAdapter.shouldShowNotification(context, selfId, conversation, message);
         }
-    }
-
-    /**
-     * 用户注销的时候调用，close 之后消息不会推送过来，也不可以进行发消息等操作
-     *
-     * @param callback AVException 常见于网络错误
-     */
-    public void closeWithCallback(final AVIMClientCallback callback) {
-        imClient.close(new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient client, AVIMException e) {
-                if (e != null) {
-                    LogUtils.logException(e);
-                }
-                if (callback != null) {
-                    callback.done(client, e);
-                }
-            }
-        });
-        imClient = null;
-        selfId = null;
     }
 
     /**
@@ -428,5 +412,8 @@ public class ChatManager extends AVIMClientEventHandler {
             public void done(AVIMClient avimClient, AVIMException e) {
             }
         });
+
+        imClient = null;
+        selfId = null;
     }
 }

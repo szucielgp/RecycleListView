@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.service;
+package com.superlity.test.recyclelistviewtest.imapi.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.superlity.test.recyclelistviewtest.R;
 import com.superlity.test.recyclelistviewtest.ui.EntrySplashActivity;
-import com.superlity.test.recyclelistviewtest.service.event.InvitationEvent;
+import com.superlity.test.recyclelistviewtest.imapi.service.event.InvitationEvent;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
 import com.superlity.test.recyclelistviewtest.utils.NotificationUtil;
 

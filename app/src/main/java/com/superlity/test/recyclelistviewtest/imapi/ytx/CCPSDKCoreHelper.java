@@ -1,4 +1,4 @@
-package com.superlity.test.recyclelistviewtest.ytx;
+package com.superlity.test.recyclelistviewtest.imapi.ytx;
 
 import android.app.PendingIntent;
 import android.content.Context;
