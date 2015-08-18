@@ -42,6 +42,7 @@ import com.superlity.test.recyclelistviewtest.R;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.AVIMTypedMessagesArrayCallback;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.ChatManager;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.MessageEvent;
+import com.superlity.test.recyclelistviewtest.imapi.ytx.CCPSDKCoreHelper;
 import com.superlity.test.recyclelistviewtest.ui.adapter.RecycleViewAdapter;
 import com.superlity.test.recyclelistviewtest.ui.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.ui.emoji.SelectFaceHelper;
@@ -382,6 +383,10 @@ public class ChatActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if ( id == android.R.id.home ){
+            finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -448,7 +453,9 @@ public class ChatActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.voip:
-                                Intent intent = new Intent(ChatActivity.this, YTXLoginActivity.class);
+                                CCPSDKCoreHelper.getInstance().startCallVoice( CCPSDKCoreHelper.getInstance().getOtherId() );
+                                Intent intent = new Intent(ChatActivity.this, CallActivity.class);
+                                intent.putExtra( "type", "call" );
                                 startActivity(intent);
                                 break;
 
@@ -533,8 +540,8 @@ public class ChatActivity extends AppCompatActivity {
             startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.chat_activity_select_picture)),
                     GALLERY_REQUEST);
         } else {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            Intent intent = new Intent(Intent.ACTION_PICK);
+//            intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
             startActivityForResult(intent, GALLERY_KITKAT_REQUEST);
         }
@@ -563,15 +570,20 @@ public class ChatActivity extends AppCompatActivity {
                     Uri uri;
                     if (requestCode == GALLERY_REQUEST) {
                         uri = intent.getData();
+                        String localSelectPath = ProviderPathUtils.getPath(this, uri);
+                        sendImage(localSelectPath);
                     } else {
                         //for Android 4.4
-                        uri = intent.getData();
-                        final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ){
+                            uri = intent.getData();
+                            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                            String localSelectPath = ProviderPathUtils.getPath(this, uri);
+                            sendImage(localSelectPath);
+                        }
                     }
-                    String localSelectPath = ProviderPathUtils.getPath(this, uri);
-                    sendImage(localSelectPath);
+
                     break;
                 case TAKE_CAMERA_REQUEST:
                     // Intent data  = new Intent("com.android.camera.action.CROP");

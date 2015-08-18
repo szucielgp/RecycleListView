@@ -1,11 +1,10 @@
-package com.superlity.test.recyclelistviewtest.imapi.service;
+package com.superlity.test.recyclelistviewtest.imapi.leancloud.service;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.superlity.test.recyclelistviewtest.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by lzw on 14/12/19.
  */
 public class CacheService {
+
+    private static final String OBJECT_ID = "objectId";
+
     private static Map<String, AVIMConversation> cachedConvs = new ConcurrentHashMap<>();
     private static Map<String, AVUser> cachedUsers = new ConcurrentHashMap<>();
     private static volatile List<String> friendIds = new ArrayList<String>();
@@ -90,7 +92,7 @@ public class CacheService {
             return Collections.EMPTY_LIST;
         }
         AVQuery<AVUser> q = AVUser.getQuery();
-        q.whereContainedIn(Constant.OBJECT_ID, userIds);
+        q.whereContainedIn(OBJECT_ID, userIds);
         q.setLimit(1000);
         q.setCachePolicy(AVQuery.CachePolicy.NETWORK_ELSE_CACHE);
         return q.find();

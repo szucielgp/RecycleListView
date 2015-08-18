@@ -12,11 +12,10 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.User;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.entity.UserInfo;
-import com.superlity.test.recyclelistviewtest.imapi.service.CacheService;
-import com.superlity.test.recyclelistviewtest.imapi.service.PreferenceMap;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.service.CacheService;
+import com.superlity.test.recyclelistviewtest.imapi.leancloud.service.PreferenceMap;
 import com.superlity.test.recyclelistviewtest.ui.ChatActivity;
 import com.superlity.test.recyclelistviewtest.utils.LogUtils;
-
 
 import java.util.List;
 import java.util.Random;
@@ -105,10 +104,10 @@ public class ChatManagerAdapterImpl implements ChatManagerAdapter {
         NotificationManager man = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = builder.getNotification();
         PreferenceMap preferenceMap = PreferenceMap.getCurUserPrefDao(this.context);
-        if (preferenceMap.isVoiceNotify()) {
+        if (preferenceMap.isVoiceNotify(context)) {
             notification.defaults |= Notification.DEFAULT_SOUND;
         }
-        if (preferenceMap.isVibrateNotify()) {
+        if (preferenceMap.isVibrateNotify(context)) {
             notification.defaults |= Notification.DEFAULT_VIBRATE;
         }
         man.notify(REPLY_NOTIFY_ID, notification);
@@ -117,12 +116,6 @@ public class ChatManagerAdapterImpl implements ChatManagerAdapter {
 
     private boolean showNotificationWhenNewMessageCome(String selfId) {
         PreferenceMap preferenceMap = PreferenceMap.getCurUserPrefDao(context);
-        return preferenceMap.isNotifyWhenNews();
-    }
-
-
-    public void cancelNotification() {
-        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nMgr.cancel(REPLY_NOTIFY_ID);
+        return preferenceMap.isNotifyWhenNews(context);
     }
 }

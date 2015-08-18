@@ -3,14 +3,11 @@ package com.superlity.test.recyclelistviewtest.imapi.ytx;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.superlity.test.recyclelistviewtest.ui.CallActivity;
-import com.superlity.test.recyclelistviewtest.ui.CallDialActivity;
-import com.superlity.test.recyclelistviewtest.ui.LCLoginActivity;
-import com.superlity.test.recyclelistviewtest.utils.UtilTools;
+import com.superlity.test.recyclelistviewtest.ui.LoginActivity;
+import com.superlity.test.recyclelistviewtest.utils.Utils;
 import com.yuntongxun.ecsdk.ECDevice;
 import com.yuntongxun.ecsdk.ECError;
 import com.yuntongxun.ecsdk.ECInitParams;
@@ -25,10 +22,13 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
 
     private static final String APPKEY = "aaf98f894f16fdb7014f1cbc4d5a0884";
     private static final String APPTOKEN = "a7e244c1f4e11380ec671d9d069fa6af";
-    private static final int MSG_LOGIN_FINISH = 100001;
 
     private static CCPSDKCoreHelper instance;
     private Context context;
+
+    private String selfId;
+    private String otherId;
+
     private String currentCallId;
     private ECInitParams params;
     private OnInitFinishListener listener;
@@ -40,23 +40,13 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
         return instance;
     }
 
-    private Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if ( msg.what == MSG_LOGIN_FINISH ){
-                initFinish();
-                return true;
-            }
-            return false;
-        }
-    });
-
     public void setContext(Context context) {
         this.context = context;
     }
 
-    public void init(OnInitFinishListener listener) {
+    public void init( String selfId, OnInitFinishListener listener) {
         uninit();
+        this.selfId = selfId;
         this.listener = listener;
         if (context == null) {
             //TODO
@@ -74,12 +64,11 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
     @Override
     public void onInitialized() {
         //TODO
-
         if (params == null || params.getInitParams() == null || params.getInitParams().isEmpty()) {
             params = new ECInitParams();
         }
         params.reset();
-        params.setUserid(Constant.conversitionInfo.getSelfCount()); //这里需要设置用户的ID，用于与服务器保持长链接
+        params.setUserid(this.selfId); //这里需要设置用户的ID，用于与服务器保持长链接
         params.setAppKey(APPKEY); // 设置应用的APPKey
         params.setToken(APPTOKEN); // 设置应用的APPID
         params.setMode(ECInitParams.LoginMode.FORCE_LOGIN); // 设置登录模式，如果用户使用同一账号登陆则挤掉之前登陆的地方
@@ -92,16 +81,6 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
         Intent intent = new Intent(context, CallActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         params.setPendingIntent(pendingIntent);
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                ECDevice.login(params);
-//                handler.sendEmptyMessage(MSG_LOGIN_FINISH);
-//                Looper.loop();
-//            }
-//        }).start();
         ECDevice.login(params);
         initFinish();
     }
@@ -111,18 +90,17 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
      * 首先跳转页面，回调初始化完成事件
      */
     private void initFinish(){
-        Intent callIntent = new Intent(context, CallDialActivity.class);
-        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(callIntent);
-
         if (this.listener != null) {
-            this.listener.onInitFinish();
+            this.listener.onInitSuccess();
         }
     }
 
     @Override
     public void onError(Exception e) {
-        //TODO
+        //TODO 初始化失败
+        if (this.listener != null) {
+            this.listener.onInitError();
+        }
     }
 
     @Override
@@ -143,11 +121,11 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
             } else {
                 // 链接状态失败
             }
-//            UtilTools.toast("登陆失败");
+//            Utils.toast("登陆失败");
             //TODO
         } else if (state == ECDevice.ECConnectState.CONNECT_SUCCESS) {
             // 登陆成功
-//            UtilTools.toast("登陆成功");
+//            Utils.toast("登陆成功");
             //TODO
         }
     }
@@ -161,7 +139,7 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
 
     @Override
     public void onCallEvents(final ECVoIPCallManager.VoIPCall voipCall) {
-//        UtilTools.toast("onCallEvents");
+//        Utils.toast("onCallEvents");
         //TODO
         // 处理呼叫事件回调
         if (voipCall == null) {
@@ -173,28 +151,28 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
         switch (callState) {
             case ECCALL_PROCEEDING:
                 // 正在连接服务器处理呼叫请求
-                UtilTools.toast("正在连接服务器处理呼叫请求");
+                Utils.toast(context,"正在连接服务器处理呼叫请求");
                 //TODO
                 break;
             case ECCALL_ALERTING:
                 // 呼叫到达对方客户端，对方正在振铃
-                UtilTools.toast("呼叫到达对方客户端，对方正在振铃");
+                Utils.toast(context, "呼叫到达对方客户端，对方正在振铃");
                 //TODO
                 break;
             case ECCALL_ANSWERED:
                 // 对方接听本次呼叫
-                UtilTools.toast("对方接听本次呼叫");
+                Utils.toast(context,"对方接听本次呼叫");
                 //TODO
                 break;
             case ECCALL_FAILED:
                 // 本次呼叫失败，根据失败原因播放提示音
-                UtilTools.toast("本次呼叫失败，根据失败原因播放提示音");
-                UtilTools.toast(voipCall.reason + "");
+                Utils.toast(context,"本次呼叫失败，根据失败原因播放提示音");
+                Utils.toast(context, voipCall.reason + "");
                 //TODO
                 break;
             case ECCALL_RELEASED:
                 // 通话释放[完成一次呼叫]
-                UtilTools.toast("通话释放[完成一次呼叫]");
+                Utils.toast(context,"通话释放[完成一次呼叫]");
                 //TODO
                 break;
             default:
@@ -203,14 +181,26 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
         }
     }
 
+
+    /**
+     * 提前设置对方的id，放需要时直接调用拨号即可
+     * @param otherId
+     */
+    public void setOtherId( String otherId ){
+        this.otherId = otherId;
+    }
+
+    public String getOtherId(){
+        return this.otherId;
+    }
+
     /**
      * 拨号
      * @param acount 对方的账号
      */
     public void startCallVoice(final String acount) {
         if (acount == null) {
-//            UtilTools.toast("对方账号为空");
-            //TODO
+            //TODO 对方账号为空
             return;
         }
         new Thread(new Runnable() {
@@ -226,7 +216,8 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
      * @param callid
      */
     public void acceptCallVoice( String callid ) {
-        ECDevice.getECVoIPCallManager().acceptCall(callid);
+        this.currentCallId = callid;
+        ECDevice.getECVoIPCallManager().acceptCall(this.currentCallId);
     }
 
     /**
@@ -235,6 +226,7 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
     public void endCallVoice() {
         if (currentCallId != null) {
             ECDevice.getECVoIPCallManager().releaseCall(currentCallId);
+            currentCallId = null;
         }
     }
 
@@ -253,7 +245,7 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
         ECDevice.logout(new ECDevice.OnLogoutListener() {
             @Override
             public void onLogout() {
-                Intent intent = new Intent(context, LCLoginActivity.class);
+                Intent intent = new Intent(context, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -264,6 +256,7 @@ public class CCPSDKCoreHelper implements ECDevice.InitListener, ECDevice.OnECDev
      * 初始化完成监听器
      */
     public interface OnInitFinishListener {
-        void onInitFinish();
+        void onInitSuccess();
+        void onInitError();
     }
 }

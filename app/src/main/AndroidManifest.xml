@@ -81,7 +81,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.LCLoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="Hi"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -103,7 +103,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".imapi.service.MyReceiver">
+        <receiver android:name=".imapi.leancloud.service.MyReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -123,8 +123,6 @@
         <activity android:name=".ui.ImageBrowserActivity" />
 
         <activity android:name=".ui.CallActivity" />
-        <activity android:name=".ui.CallDialActivity" />
-        <activity android:name=".ui.YTXLoginActivity" />
 
         <!-- 云通信配置开始 -->
         <service

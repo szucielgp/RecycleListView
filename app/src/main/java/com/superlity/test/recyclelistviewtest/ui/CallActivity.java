@@ -13,13 +13,16 @@ import com.yuntongxun.ecsdk.ECVoIPCallManager;
 
 public class CallActivity extends AppCompatActivity {
 
-    /**呼入方或者呼出方*/
+    /**
+     * 呼入方或者呼出方
+     */
     public static final String EXTRA_OUTGOING_CALL = "con.yuntongxun.ecdemo.VoIP_OUTGOING_CALL";
 
     private TextView textPartnetAccount;
     private Button btnAccept;
     private Button btnRefuse;
     private String callId;
+    private boolean isCall = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class CallActivity extends AppCompatActivity {
         callId = getIntent().getStringExtra(ECDevice.CALLID);
         //获取对方的号码
         Object mCallNumber = getIntent().getStringExtra(ECDevice.CALLER);
+
+        String type = getIntent().getStringExtra("type");
+        isCall = type != null;
     }
 
     private void initView() {
@@ -51,11 +57,15 @@ public class CallActivity extends AppCompatActivity {
         btnAccept = (Button) findViewById(R.id.btnAccept);
         btnRefuse = (Button) findViewById(R.id.btnRefuse);
 
+        if (isCall) {
+            btnAccept.setVisibility(View.GONE);
+        }
+
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( callId != null ){
-                    CCPSDKCoreHelper.getInstance().acceptCallVoice( callId );
+                if (callId != null) {
+                    CCPSDKCoreHelper.getInstance().acceptCallVoice(callId);
                 }
             }
         });
@@ -63,7 +73,8 @@ public class CallActivity extends AppCompatActivity {
         btnRefuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CCPSDKCoreHelper.getInstance().endCallVoice();
+                finish();
             }
         });
     }
