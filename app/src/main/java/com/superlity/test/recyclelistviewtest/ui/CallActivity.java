@@ -22,6 +22,7 @@ public class CallActivity extends AppCompatActivity {
     private Button btnAccept;
     private Button btnRefuse;
     private String callId;
+    private String callNumber;
     private boolean isCall = false;
 
     @Override
@@ -46,7 +47,7 @@ public class CallActivity extends AppCompatActivity {
         //获取当前的callid
         callId = getIntent().getStringExtra(ECDevice.CALLID);
         //获取对方的号码
-        Object mCallNumber = getIntent().getStringExtra(ECDevice.CALLER);
+        callNumber = getIntent().getStringExtra(ECDevice.CALLER);
 
         String type = getIntent().getStringExtra("type");
         isCall = type != null;
@@ -61,6 +62,7 @@ public class CallActivity extends AppCompatActivity {
             btnAccept.setVisibility(View.GONE);
         }
 
+        textPartnetAccount.setText((callNumber != null) ? callNumber : "未获取到对号码");
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
