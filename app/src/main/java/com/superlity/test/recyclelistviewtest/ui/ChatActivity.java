@@ -540,8 +540,9 @@ public class ChatActivity extends AppCompatActivity {
             startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.chat_activity_select_picture)),
                     GALLERY_REQUEST);
         } else {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-//            intent.addCategory(Intent.CATEGORY_OPENABLE);
+//            Intent intent = new Intent(Intent.ACTION_PICK);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
             startActivityForResult(intent, GALLERY_KITKAT_REQUEST);
         }

@@ -45,4 +45,8 @@ dependencies {
     compile files('libs/eventbus-2.4.0.jar')
     compile files('libs/YTX_Android_Full_SDK_v5.1.4r.jar')
     compile 'com.android.support:design:22.2.1'
+
+    // 图片加载
+    // https://github.com/facebook/fresco
+    compile 'com.facebook.fresco:fresco:0.6.0'
 }
