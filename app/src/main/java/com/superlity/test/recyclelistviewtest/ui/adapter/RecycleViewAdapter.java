@@ -141,13 +141,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
   //              PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
 //                        image.getFileUrl());
               //  Uri urito  = Uri.parse(image.getFileUrl());
-                Uri urito  = Uri.parse(PathUtils.getChatFilePath(image.getMessageId()));
+                Uri urito  = Uri.parse(image.getFileUrl());
                 holder.mImageView.setImageURI(urito);
-              //  holder.mImageView.setMinimumWidth(image.getWidth());
-              //  holder.mImageView.setMinimumHeight(image.getHeight() / 2);
+                holder.mImageView.setMinimumWidth(image.getWidth());
+                holder.mImageView.setMinimumHeight(image.getHeight() / 2);
 //                holder.mImageView.setMaxWidth(image.getWidth());
 //                holder.mImageView.setMaxHeight(image.getHeight());
-                holder.mImageView.setLayoutParams(new RelativeLayout.LayoutParams(image.getWidth(),image.getHeight()));
+              //  holder.mImageView.setLayoutParams(new RelativeLayout.LayoutParams(image.getWidth(),image.getHeight()));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         image.getTimestamp())) {
                     holder.tTextView.setVisibility(View.VISIBLE);

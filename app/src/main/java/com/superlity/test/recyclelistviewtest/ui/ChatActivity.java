@@ -576,9 +576,9 @@ public class ChatActivity extends AppCompatActivity {
                         //for Android 4.4
                         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ){
                             uri = intent.getData();
-//                            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                            final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
                             String localSelectPath = ProviderPathUtils.getPath(this, uri);
                             sendImage(localSelectPath);
                         }
