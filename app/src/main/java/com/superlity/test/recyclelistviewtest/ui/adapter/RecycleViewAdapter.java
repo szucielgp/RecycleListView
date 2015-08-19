@@ -139,7 +139,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 //                        image.getFileUrl());
               //  Uri urito  = Uri.parse(image.getFileUrl());
                 Uri urito  = Uri.parse(image.getFileUrl());
-               
                 holder.mImageView.setImageURI(urito);
                 holder.mImageView.setLayoutParams(calculateImageSize(image, holder.mImageView));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
