@@ -1,6 +1,5 @@
 package com.superlity.test.recyclelistviewtest.ui.adapter;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +17,11 @@ import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.superlity.test.recyclelistviewtest.R;
-import com.superlity.test.recyclelistviewtest.ui.ImageBrowserActivity;
 import com.superlity.test.recyclelistviewtest.imapi.leancloud.MessageHelper;
+import com.superlity.test.recyclelistviewtest.ui.ImageBrowserActivity;
 import com.superlity.test.recyclelistviewtest.ui.emoji.EmojiParser;
 import com.superlity.test.recyclelistviewtest.ui.emoji.ParseEmojiMsgUtil;
 import com.superlity.test.recyclelistviewtest.utils.PathUtils;
-import com.superlity.test.recyclelistviewtest.utils.PhotoUtils;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -40,6 +38,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private Context context;
     private List<AVIMTypedMessage> messageList = new ArrayList<AVIMTypedMessage>();
     private static PrettyTime prettyTime = new PrettyTime();
+
     private enum MsgViewType {
         ComeText(0), ToText(1), ComeImage(2), ToImage(3);
         int value;
@@ -116,12 +115,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 2:
                 final AVIMImageMessage imageMsg = (AVIMImageMessage) messageList.get(position);
-              //  PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(imageMsg.getMessageId()),
-//                        imageMsg.getFileUrl());
-                Uri uri  = Uri.parse(imageMsg.getFileUrl());
+                Uri uri = Uri.parse(PathUtils.getChatFilePath(imageMsg.getMessageId()));
                 holder.mImageView.setImageURI(uri);
-                holder.mImageView.setMinimumWidth(imageMsg.getWidth());
-                holder.mImageView.setMinimumHeight(imageMsg.getHeight() / 2);
+                holder.mImageView.setLayoutParams(calculateImageSize(imageMsg, holder.mImageView));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         imageMsg.getTimestamp())) {
                     holder.tTextView.setVisibility(View.VISIBLE);
@@ -138,16 +134,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 3:
                 final AVIMImageMessage image = (AVIMImageMessage) messageList.get(position);
+
   //              PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
 //                        image.getFileUrl());
               //  Uri urito  = Uri.parse(image.getFileUrl());
                 Uri urito  = Uri.parse(image.getFileUrl());
+               
                 holder.mImageView.setImageURI(urito);
-                holder.mImageView.setMinimumWidth(image.getWidth());
-                holder.mImageView.setMinimumHeight(image.getHeight() / 2);
-//                holder.mImageView.setMaxWidth(image.getWidth());
-//                holder.mImageView.setMaxHeight(image.getHeight());
-              //  holder.mImageView.setLayoutParams(new RelativeLayout.LayoutParams(image.getWidth(),image.getHeight()));
+                holder.mImageView.setLayoutParams(calculateImageSize(image, holder.mImageView));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
                         image.getTimestamp())) {
                     holder.tTextView.setVisibility(View.VISIBLE);
@@ -168,6 +162,49 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         }
     }
 
+    private RelativeLayout.LayoutParams calculateImageSize(AVIMImageMessage image, SimpleDraweeView view) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int min = dp2px(context, 300);
+        int max = dp2px(context, 500);
+
+        float scale = 1;
+
+        if (width > height) {
+            if (width < min) {
+                scale = min / (float) width;
+            } else if (width > max) {
+                scale = max / (float) width;
+            }
+        } else {
+            if (height < min) {
+                scale = min / (float) height;
+            } else if (height > max) {
+                scale = max / (float) height;
+            }
+        }
+
+        System.out.println("scale = " + scale);
+        System.out.println("width = " + width);
+        System.out.println("height = " + height);
+        System.out.println("min = " + min);
+        System.out.println("max = " + max);
+
+        layoutParams.width = (int) (width * scale);
+        layoutParams.height = (int) (height * scale);
+
+        System.out.println("layoutParams.width = " + layoutParams.width);
+        System.out.println("layoutParams.height = " + layoutParams.height);
+
+        return layoutParams;
+    }
+
+    private static int dp2px(Context context, int dp) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
 
     private void initMessageView(int position, RecycleViewAdapter.ViewHolder holder) {
 
@@ -189,7 +226,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         public TextView mTextView;
         public TextView tTextView;
         public ImageView mImageView2;
-        public com.facebook.drawee.view.SimpleDraweeView mImageView;
+        public SimpleDraweeView mImageView;
 
         public ViewHolder(View v) {
             super(v);

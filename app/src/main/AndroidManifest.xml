@@ -81,7 +81,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.superlity.test.recyclelistviewtest.ui.LoginActivity"
             android:label="Hi"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
@@ -103,7 +103,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".imapi.leancloud.service.MyReceiver">
+        <receiver android:name="com.superlity.test.recyclelistviewtest.imapi.leancloud.service.MyReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -114,15 +114,15 @@
         <!-- leancloud 配置结束 -->
 
         <activity
-            android:name=".ui.ChatActivity"
+            android:name="com.superlity.test.recyclelistviewtest.ui.ChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.OtherAccountActivity"
+            android:name="com.superlity.test.recyclelistviewtest.ui.OtherAccountActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.ImageBrowserActivity" />
 
-        <activity android:name=".ui.CallActivity" />
+        <activity android:name="com.superlity.test.recyclelistviewtest.ui.CallActivity" />
 
         <!-- 云通信配置开始 -->
         <service
