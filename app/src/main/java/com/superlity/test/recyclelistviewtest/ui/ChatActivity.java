@@ -634,7 +634,7 @@ public class ChatActivity extends AppCompatActivity {
                         if (!result) {
                             LogUtils.i("move file failed, can't use local cache");
                         }
-                        adapter.add(imageMsg);
+//                        adapter.add(imageMsg);
                         if (adapter.getItemCount() != 0) {
                             layoutManager.scrollToPosition(adapter.getItemCount() - 1);
                         }

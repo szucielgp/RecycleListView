@@ -181,18 +181,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             }
         }
 
-        System.out.println("scale = " + scale);
-        System.out.println("width = " + width);
-        System.out.println("height = " + height);
-        System.out.println("min = " + min);
-        System.out.println("max = " + max);
-
         layoutParams.width = (int) (width * scale);
         layoutParams.height = (int) (height * scale);
-
-        System.out.println("layoutParams.width = " + layoutParams.width);
-        System.out.println("layoutParams.height = " + layoutParams.height);
-
         return layoutParams;
     }
 
