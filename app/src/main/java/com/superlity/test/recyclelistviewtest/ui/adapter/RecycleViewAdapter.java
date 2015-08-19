@@ -167,8 +167,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
         int width = image.getWidth();
         int height = image.getHeight();
-        int min = dp2px(context, 300);
-        int max = dp2px(context, 500);
+        int min = dp2px(context, 200);
+        int max = dp2px(context, 400);
 
         float scale = 1;
 
