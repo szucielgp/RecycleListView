@@ -115,7 +115,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 2:
                 final AVIMImageMessage imageMsg = (AVIMImageMessage) messageList.get(position);
-                Uri uri = Uri.parse(PathUtils.getChatFilePath(imageMsg.getMessageId()));
+                Uri uri = Uri.parse(imageMsg.getFileUrl());
                 holder.mImageView.setImageURI(uri);
                 holder.mImageView.setLayoutParams(calculateImageSize(imageMsg, holder.mImageView));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
@@ -134,12 +134,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 break;
             case 3:
                 final AVIMImageMessage image = (AVIMImageMessage) messageList.get(position);
-
-                //              PhotoUtils.displayImageCacheElseNetwork(holder.mImageView, PathUtils.getChatFilePath(image.getMessageId()),
-//                        image.getFileUrl());
-                //  Uri urito  = Uri.parse(image.getFileUrl());
                 Uri urito = Uri.parse(image.getFileUrl());
-
                 holder.mImageView.setImageURI(urito);
                 holder.mImageView.setLayoutParams(calculateImageSize(image, holder.mImageView));
                 if (position == 0 || haveTimeGap(messageList.get(position - 1).getTimestamp(),
